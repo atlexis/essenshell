@@ -4,8 +4,15 @@ Essenshell is a shell library containing the most common and essential functions
 
 ## Usage
 - `source essenshell.sh` - include and start using the library in a script.
-- `ESH_VERSION` - variable holding version of essenshell
-- `esh_version` - function printing version of essenshell
+
+### Variables
+- `ESH_VERSION` - version of essenshell
+- `ESH_CLEAR` - ANSI escape sequence for normal text
+- `ESH_COLOR_GREEN` - ANSI escape sequence for green foreground
+
+### Functions
+- `esh_version` - print version of essenshell
+- `esh_print_info <STRING>` - print string as info message
 
 ## Test
 - Dependencies: `bats-core`, `bats-support`, and `bats-assert`

@@ -7,3 +7,4 @@
 test_dir=$(dirname $(realpath $0))
 
 $test_dir/common.bats
+$test_dir/print.bats
