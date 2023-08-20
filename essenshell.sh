@@ -17,15 +17,15 @@ function _esh_print_prompt {
 
 function esh_print_info {
     local message=$1
-    _esh_print_prompt $ESH_COLOR_GREEN "INFO" $message
+    _esh_print_prompt "$ESH_COLOR_GREEN" "INFO" "$message"
 }
 
 function esh_print_warning {
     local message=$1
-    _esh_print_prompt $ESH_COLOR_YELLOW "WARNING" $message
+    _esh_print_prompt "$ESH_COLOR_YELLOW" "WARNING" "$message"
 }
 
 function esh_print_error {
     local message=$1
-    _esh_print_prompt $ESH_COLOR_RED "ERROR" $message
+    _esh_print_prompt "$ESH_COLOR_RED" "ERROR" "$message"
 }

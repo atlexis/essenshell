@@ -23,17 +23,17 @@ function assert_prompt_print {
 
 function assert_info_print {
     local message=$1
-    assert_prompt_print $green "INFO" $message
+    assert_prompt_print "$green" "INFO" "$message"
 }
 
 function assert_warning_print {
     local message=$1
-    assert_prompt_print $yellow "WARNING" $message
+    assert_prompt_print "$yellow" "WARNING" "$message"
 }
 
 function assert_error_print {
     local message=$1
-    assert_prompt_print $red "ERROR" $message
+    assert_prompt_print "$red" "ERROR" "$message"
 }
 
 @test "info print 1" {
@@ -43,9 +43,9 @@ function assert_error_print {
 }
 
 @test "info print 2" {
-    run esh_print_info "bar"
+    run esh_print_info "this is a sentence"
 
-    assert_info_print "bar"
+    assert_info_print "this is a sentence"
 }
 
 @test "warning print 1" {
@@ -55,9 +55,9 @@ function assert_error_print {
 }
 
 @test "warning print 2" {
-    run esh_print_warning "bar"
+    run esh_print_warning "this is a sentence"
 
-    assert_warning_print "bar"
+    assert_warning_print "this is a sentence"
 }
 
 @test "error print 1" {
@@ -67,7 +67,7 @@ function assert_error_print {
 }
 
 @test "error print 2" {
-    run esh_print_error "bar"
+    run esh_print_error "this is a sentence"
 
-    assert_error_print "bar"
+    assert_error_print "this is a sentence"
 }
