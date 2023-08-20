@@ -1,10 +1,14 @@
 #!/usr/bin/env bats
 
 clear="\033[0m"
+black="\033[30;m"
 red="\033[31;m"
 green="\033[32;m"
 yellow="\033[33;m"
+blue="\033[34;m"
 magenta="\033[35;m"
+cyan="\033[36;m"
+white="\033[37;m"
 
 function setup {
     bats_load_library bats-support
@@ -15,64 +19,64 @@ function setup {
 }
 
 function assert_prompt_print {
-    local color=$1
-    local prompt=$2
-    local message=$3
-    local expected=$(echo -e "[${color}${prompt}${clear}] ${message}")
+    local expected=""
+
+    if [ $# -eq 3 ]; then # no app prompt
+        local color=$1
+        local prompt=$2
+        local message=$3
+        expected=$(echo -e "[${color}${prompt}${clear}] ${message}")
+    elif [ $# -eq 4 ]; then # app prompt without color
+        local app_name=$1
+        local color=$2
+        local prompt=$3
+        local message=$4
+        expected=$(echo -e "[${app_name}:${color}${prompt}${clear}] ${message}")
+    elif [ $# -eq 5 ]; then # app prompt with color
+        local app_color=$1
+        local app_name=$2
+        local color=$3
+        local prompt=$4
+        local message=$5
+        expected=$(echo -e "[${app_color}${app_name}${clear}:${color}${prompt}${clear}] ${message}")
+    fi
+
     assert_output "$expected"
 }
 
-function assert_app_prompt_print {
-    local app_name=$1
-    local color=$2
-    local prompt=$3
-    local message=$4
-    local expected=$(echo -e "[${app_name}:${color}${prompt}${clear}] ${message}")
-    assert_output "$expected"
+function assert_print {
+    local color=$1
+    local prompt=$2
+
+    if [ $# -eq 3 ]; then
+        local message=$3
+        assert_prompt_print "$color" "$prompt" "$message"
+    elif [ $# -eq 4 ]; then
+        local app_name=$3
+        local message=$4
+        assert_prompt_print "$app_name" "$color" "$prompt" "$message"
+    elif [ $# -eq 5 ]; then
+        local app_color=$3
+        local app_name=$4
+        local message=$5
+        assert_prompt_print "$app_color" "$app_name" "$color" "$prompt" "$message"
+    fi
 }
 
 function assert_info_print {
-    local message=$1
-    assert_prompt_print "$green" "INFO" "$message"
+    assert_print "$green" "INFO" "$@"
 }
 
 function assert_warning_print {
-    local message=$1
-    assert_prompt_print "$yellow" "WARNING" "$message"
+    assert_print "$yellow" "WARNING" "$@"
 }
 
 function assert_error_print {
-    local message=$1
-    assert_prompt_print "$red" "ERROR" "$message"
+    assert_print "$red" "ERROR" "$@"
 }
 
 function assert_debug_print {
-    local message=$1
-    assert_prompt_print "$magenta" "DEBUG" "$message"
-}
-
-function assert_app_info_print {
-    local app_name=$1
-    local message=$2
-    assert_app_prompt_print "$app_name" "$green" "INFO" "$message"
-}
-
-function assert_app_warning_print {
-    local app_name=$1
-    local message=$2
-    assert_app_prompt_print "$app_name" "$yellow" "WARNING" "$message"
-}
-
-function assert_app_error_print {
-    local app_name=$1
-    local message=$2
-    assert_app_prompt_print "$app_name" "$red" "ERROR" "$message"
-}
-
-function assert_app_debug_print {
-    local app_name=$1
-    local message=$2
-    assert_app_prompt_print "$app_name" "$magenta" "DEBUG" "$message"
+    assert_print "$magenta" "DEBUG" "$@"
 }
 
 @test "info print 1" {
@@ -134,53 +138,45 @@ function assert_app_debug_print {
 }
 
 @test "info print with app name" {
-    ESH_APP_NAME="Tester"
+    esh_set_app_name "Tester"
 
     run esh_print_info "foo bar baz"
 
-    assert_app_info_print "Tester" "foo bar baz"
+    assert_info_print "Tester" "foo bar baz"
 }
 
 @test "warning print with app name" {
-    ESH_APP_NAME="Tester"
+    esh_set_app_name "Tester"
 
     run esh_print_warning "foo bar baz"
 
-    assert_app_warning_print "Tester" "foo bar baz"
+    assert_warning_print "Tester" "foo bar baz"
 }
 
 @test "error print with app name" {
-    ESH_APP_NAME="Tester"
+    esh_set_app_name "Tester"
 
     run esh_print_error "foo bar baz"
 
-    assert_app_error_print "Tester" "foo bar baz"
+    assert_error_print "Tester" "foo bar baz"
 }
 
 @test "enabled debug print with app name" {
     ESH_DEBUG=true
-    ESH_APP_NAME="Tester"
+    esh_set_app_name "Tester"
 
     run esh_print_debug "foo bar baz"
 
-    assert_app_debug_print "Tester" "foo bar baz"
+    assert_debug_print "Tester" "foo bar baz"
 }
 
 @test "disabled debug print with app name" {
     ESH_DEBUG=false
-    ESH_APP_NAME="Tester"
+    esh_set_app_name "Tester"
 
     run esh_print_debug "foo bar baz"
 
     refute_output
-}
-
-@test "set app name with function" {
-    esh_set_app_name "MyApp"
-
-    run esh_print_info "foo bar baz"
-
-    assert_app_info_print "MyApp" "foo bar baz"
 }
 
 @test "overwrite app name with function" {
@@ -189,7 +185,7 @@ function assert_app_debug_print {
 
     run esh_print_info "foo bar baz"
 
-    assert_app_info_print "AnotherName" "foo bar baz"
+    assert_info_print "AnotherName" "foo bar baz"
 }
 
 @test "set app name with no argument" {
@@ -204,6 +200,133 @@ function assert_app_debug_print {
 @test "set app name with empty string" {
     esh_set_app_name "MyApp"
     esh_set_app_name ""
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "foo bar baz"
+}
+
+@test "info print with app name in black color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_COLOR_BLACK
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$black" "FOOBAR" "foo bar baz"
+}
+
+@test "warning print with app name in black color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_COLOR_BLACK
+
+    run esh_print_warning "foo bar baz"
+
+    assert_warning_print "$black" "FOOBAR" "foo bar baz"
+}
+
+@test "error print with app name in black color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_COLOR_BLACK
+
+    run esh_print_error "foo bar baz"
+
+    assert_error_print "$black" "FOOBAR" "foo bar baz"
+}
+
+@test "enabled debug print with app name in black color" {
+    ESH_DEBUG=true
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_COLOR_BLACK
+
+    run esh_print_debug "foo bar baz"
+
+    assert_debug_print "$black" "FOOBAR" "foo bar baz"
+}
+
+@test "disabled debug print with app name in black color" {
+    ESH_DEBUG=false
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_COLOR_BLACK
+
+    run esh_print_debug "foo bar baz"
+
+    refute_output
+}
+
+@test "set app name in red color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_COLOR_RED
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$red" "FOOBAR" "foo bar baz"
+}
+
+@test "set app name in green color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_COLOR_GREEN
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$green" "FOOBAR" "foo bar baz"
+}
+
+@test "set app name in yellow color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_COLOR_YELLOW
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$yellow" "FOOBAR" "foo bar baz"
+}
+
+@test "set app name in blue color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_COLOR_BLUE
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$blue" "FOOBAR" "foo bar baz"
+}
+
+@test "set app name in magenta color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_COLOR_MAGENTA
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$magenta" "FOOBAR" "foo bar baz"
+}
+
+@test "set app name in cyan color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_COLOR_CYAN
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$cyan" "FOOBAR" "foo bar baz"
+}
+
+@test "set app name in white color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_COLOR_WHITE
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$white" "FOOBAR" "foo bar baz"
+}
+
+@test "set app name in invalid color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color "INVALID_COLOR"
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "FOOBAR" "foo bar baz"
+}
+
+@test "set app color without app name" {
+    esh_set_app_color "$ESH_COLOR_CYAN"
 
     run esh_print_info "foo bar baz"
 
