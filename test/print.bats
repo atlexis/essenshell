@@ -1,7 +1,8 @@
 #!/usr/bin/env bats
 
-green="\033[32;m"
 clear="\033[0m"
+green="\033[32;m"
+yellow="\033[33;m"
 
 function setup {
     bats_load_library bats-support
@@ -13,7 +14,15 @@ function setup {
 
 function assert_info_print {
     local message=$1
-    local expected=$(echo -e "[${green}INFO${clear}] ${message}")
+    local info_prompt="INFO"
+    local expected=$(echo -e "[${green}${info_prompt}${clear}] ${message}")
+    assert_output "$expected"
+}
+
+function assert_warning_print {
+    local message=$1
+    local warning_prompt="WARNING"
+    local expected=$(echo -e "[${yellow}${warning_prompt}${clear}] ${message}")
     assert_output "$expected"
 }
 
@@ -27,4 +36,16 @@ function assert_info_print {
     run esh_print_info "bar"
 
     assert_info_print "bar"
+}
+
+@test "warning print 1" {
+    run esh_print_warning "foo"
+
+    assert_warning_print "foo"
+}
+
+@test "warning print 2" {
+    run esh_print_warning "bar"
+
+    assert_warning_print "bar"
 }

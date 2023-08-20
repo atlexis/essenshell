@@ -9,10 +9,12 @@ Essenshell is a shell library containing the most common and essential functions
 - `ESH_VERSION` - version of essenshell
 - `ESH_CLEAR` - ANSI escape sequence for normal text
 - `ESH_COLOR_GREEN` - ANSI escape sequence for green foreground
+- `ESH_COLOR_YELLOW` - ANSI escape sequence for yellow foreground
 
 ### Functions
 - `esh_version` - print version of essenshell
 - `esh_print_info <STRING>` - print string as info message
+- `esh_print_warning <STRING>` - print string as warning message
 
 ## Test
 - Dependencies: `bats-core`, `bats-support`, and `bats-assert`
