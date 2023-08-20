@@ -22,6 +22,15 @@ function assert_prompt_print {
     assert_output "$expected"
 }
 
+function assert_app_prompt_print {
+    local app_name=$1
+    local color=$2
+    local prompt=$3
+    local message=$4
+    local expected=$(echo -e "[${app_name}:${color}${prompt}${clear}] ${message}")
+    assert_output "$expected"
+}
+
 function assert_info_print {
     local message=$1
     assert_prompt_print "$green" "INFO" "$message"
@@ -40,6 +49,30 @@ function assert_error_print {
 function assert_debug_print {
     local message=$1
     assert_prompt_print "$magenta" "DEBUG" "$message"
+}
+
+function assert_app_info_print {
+    local app_name=$1
+    local message=$2
+    assert_app_prompt_print "$app_name" "$green" "INFO" "$message"
+}
+
+function assert_app_warning_print {
+    local app_name=$1
+    local message=$2
+    assert_app_prompt_print "$app_name" "$yellow" "WARNING" "$message"
+}
+
+function assert_app_error_print {
+    local app_name=$1
+    local message=$2
+    assert_app_prompt_print "$app_name" "$red" "ERROR" "$message"
+}
+
+function assert_app_debug_print {
+    local app_name=$1
+    local message=$2
+    assert_app_prompt_print "$app_name" "$magenta" "DEBUG" "$message"
 }
 
 @test "info print 1" {
@@ -98,4 +131,81 @@ function assert_debug_print {
     run esh_print_debug "this should not be seen"
 
     refute_output
+}
+
+@test "info print with app name" {
+    ESH_APP_NAME="Tester"
+
+    run esh_print_info "foo bar baz"
+
+    assert_app_info_print "Tester" "foo bar baz"
+}
+
+@test "warning print with app name" {
+    ESH_APP_NAME="Tester"
+
+    run esh_print_warning "foo bar baz"
+
+    assert_app_warning_print "Tester" "foo bar baz"
+}
+
+@test "error print with app name" {
+    ESH_APP_NAME="Tester"
+
+    run esh_print_error "foo bar baz"
+
+    assert_app_error_print "Tester" "foo bar baz"
+}
+
+@test "enabled debug print with app name" {
+    ESH_DEBUG=true
+    ESH_APP_NAME="Tester"
+
+    run esh_print_debug "foo bar baz"
+
+    assert_app_debug_print "Tester" "foo bar baz"
+}
+
+@test "disabled debug print with app name" {
+    ESH_DEBUG=false
+    ESH_APP_NAME="Tester"
+
+    run esh_print_debug "foo bar baz"
+
+    refute_output
+}
+
+@test "set app name with function" {
+    esh_set_app_name "MyApp"
+
+    run esh_print_info "foo bar baz"
+
+    assert_app_info_print "MyApp" "foo bar baz"
+}
+
+@test "overwrite app name with function" {
+    esh_set_app_name "MyApp"
+    esh_set_app_name "AnotherName"
+
+    run esh_print_info "foo bar baz"
+
+    assert_app_info_print "AnotherName" "foo bar baz"
+}
+
+@test "set app name with no argument" {
+    esh_set_app_name "MyApp"
+    esh_set_app_name
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "foo bar baz"
+}
+
+@test "set app name with empty string" {
+    esh_set_app_name "MyApp"
+    esh_set_app_name ""
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "foo bar baz"
 }

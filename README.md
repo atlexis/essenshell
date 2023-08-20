@@ -6,6 +6,7 @@ Essenshell is a shell library containing the most common and essential functions
 - `source essenshell.sh` - include and start using the library in a script
 - use [variables](#variables) or [functions](#functions) as described below
 - `env ESH_DEBUG=true ./myScript.sh` - enable debug prints
+- `env ESH_APP_NAME=<NAME> ./myScript.sh` - set application name before running script
 
 ### Variables
 - `ESH_VERSION` - version of essenshell
@@ -17,6 +18,7 @@ Essenshell is a shell library containing the most common and essential functions
 - `ESH_DEBUG`
     - set to true to enable debug prints, false by default
     - keeps its original value if set before sourcing `essenshell.sh`
+- `ESH_APP_NAME` - name of application to show in prints
 
 ### Functions
 - `esh_version` - print version of essenshell
@@ -24,6 +26,7 @@ Essenshell is a shell library containing the most common and essential functions
 - `esh_print_warning <STRING>` - print string as warning message
 - `esh_print_error <STRING>` - print string as error message
 - `esh_print_debug <STRING>` - print string as debug message if debug enabled (`ESH_DEBUG`)
+- `esh_set_app_name <STRING>` - set application name, resets if no or empty string
 - functions beginning with an underscore are private functions and are only intended for internal use, do not call directly since their APIs are not stable
 
 ## Test

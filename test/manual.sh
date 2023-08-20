@@ -20,3 +20,9 @@ esh_print_error "error test"
 esh_print_debug "only seen when running with 'env ESH_DEBUG=true ./manual.sh'"
 ESH_DEBUG=true
 esh_print_debug "esh_debug test"
+
+ESH_APP_NAME="Manual"
+esh_print_info "info with app name"
+esh_print_warning "warning with app name"
+esh_print_error "error with app name"
+esh_print_debug "debug with app name"
