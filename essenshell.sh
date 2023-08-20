@@ -3,6 +3,9 @@ ESH_CLEAR="\033[0m"
 ESH_COLOR_RED="\033[31;m"
 ESH_COLOR_GREEN="\033[32;m"
 ESH_COLOR_YELLOW="\033[33;m"
+ESH_COLOR_MAGENTA="\033[35;m"
+
+[ -z $ESH_DEBUG ] && ESH_DEBUG=false
 
 function esh_version {
     echo $ESH_VERSION
@@ -28,4 +31,11 @@ function esh_print_warning {
 function esh_print_error {
     local message=$1
     _esh_print_prompt "$ESH_COLOR_RED" "ERROR" "$message"
+}
+
+function esh_print_debug {
+    $ESH_DEBUG || return
+
+    local message=$1
+    _esh_print_prompt "$ESH_COLOR_MAGENTA" "DEBUG" "$message"
 }

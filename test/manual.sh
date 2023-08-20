@@ -16,3 +16,7 @@ esh_version
 esh_print_info "info test"
 esh_print_warning "warning test"
 esh_print_error "error test"
+
+esh_print_debug "only seen when running with 'env ESH_DEBUG=true ./manual.sh'"
+ESH_DEBUG=true
+esh_print_debug "esh_debug test"

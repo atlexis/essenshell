@@ -4,6 +4,7 @@ clear="\033[0m"
 red="\033[31;m"
 green="\033[32;m"
 yellow="\033[33;m"
+magenta="\033[35;m"
 
 function setup {
     bats_load_library bats-support
@@ -34,6 +35,11 @@ function assert_warning_print {
 function assert_error_print {
     local message=$1
     assert_prompt_print "$red" "ERROR" "$message"
+}
+
+function assert_debug_print {
+    local message=$1
+    assert_prompt_print "$magenta" "DEBUG" "$message"
 }
 
 @test "info print 1" {
@@ -70,4 +76,26 @@ function assert_error_print {
     run esh_print_error "this is a sentence"
 
     assert_error_print "this is a sentence"
+}
+
+@test "debug print not enabled by default" {
+    run esh_print_debug "this should not be seen"
+
+    refute_output
+}
+
+@test "debug print enabled" {
+    ESH_DEBUG=true
+
+    run esh_print_debug "this should be seen"
+
+    assert_debug_print "this should be seen"
+}
+
+@test "debug print disabled" {
+    ESH_DEBUG=false
+
+    run esh_print_debug "this should not be seen"
+
+    refute_output
 }
