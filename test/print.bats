@@ -1,6 +1,7 @@
 #!/usr/bin/env bats
 
 clear="\033[0m"
+red="\033[31;m"
 green="\033[32;m"
 yellow="\033[33;m"
 
@@ -12,18 +13,27 @@ function setup {
     source ${dir}/../essenshell.sh
 }
 
+function assert_prompt_print {
+    local color=$1
+    local prompt=$2
+    local message=$3
+    local expected=$(echo -e "[${color}${prompt}${clear}] ${message}")
+    assert_output "$expected"
+}
+
 function assert_info_print {
     local message=$1
-    local info_prompt="INFO"
-    local expected=$(echo -e "[${green}${info_prompt}${clear}] ${message}")
-    assert_output "$expected"
+    assert_prompt_print $green "INFO" $message
 }
 
 function assert_warning_print {
     local message=$1
-    local warning_prompt="WARNING"
-    local expected=$(echo -e "[${yellow}${warning_prompt}${clear}] ${message}")
-    assert_output "$expected"
+    assert_prompt_print $yellow "WARNING" $message
+}
+
+function assert_error_print {
+    local message=$1
+    assert_prompt_print $red "ERROR" $message
 }
 
 @test "info print 1" {
@@ -48,4 +58,16 @@ function assert_warning_print {
     run esh_print_warning "bar"
 
     assert_warning_print "bar"
+}
+
+@test "error print 1" {
+    run esh_print_error "foo"
+
+    assert_error_print "foo"
+}
+
+@test "error print 2" {
+    run esh_print_error "bar"
+
+    assert_error_print "bar"
 }
