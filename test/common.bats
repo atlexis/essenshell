@@ -1,5 +1,3 @@
-#!/usr/bin/env bats
-
 function setup {
     bats_load_library bats-support
     bats_load_library bats-assert
@@ -9,7 +7,7 @@ function setup {
 }
 
 @test "correct version variable" {
-    [ $ESH_VERSION = 0.0.0 ]
+    assert [ $ESH_VERSION = 0.0.0 ]
 }
 
 @test "correct version function" {

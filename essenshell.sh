@@ -1,4 +1,4 @@
-ESH_VERSION=0.0.0
+ESH_VERSION="0.0.0"
 ESH_CLEAR="\033[0m"
 ESH_COLOR_BLACK="\033[30;m"
 ESH_COLOR_RED="\033[31;m"
@@ -9,7 +9,7 @@ ESH_COLOR_MAGENTA="\033[35;m"
 ESH_COLOR_CYAN="\033[36;m"
 ESH_COLOR_WHITE="\033[37;m"
 
-[ -z $ESH_DEBUG ] && ESH_DEBUG=false
+[ -z ${ESH_DEBUG+x} ] && ESH_DEBUG=false
 
 _ESH_APP_NAME=""
 _ESH_APP_COLOR=""
@@ -55,20 +55,31 @@ function esh_print_debug {
 }
 
 function esh_set_app_name {
-    _ESH_APP_NAME=$1
+    if [ -z ${1+x} ]; then
+        _ESH_APP_NAME=""
+    else
+        _ESH_APP_NAME=$1
+    fi
 }
 
 function esh_set_app_color {
     local color=$1
 
     case "$color" in
-        "$ESH_COLOR_BLACK"|\
-        "$ESH_COLOR_RED"|\
-        "$ESH_COLOR_GREEN"|\
-        "$ESH_COLOR_YELLOW"|\
-        "$ESH_COLOR_BLUE"|\
-        "$ESH_COLOR_MAGENTA"|\
-        "$ESH_COLOR_CYAN"|\
+        "$ESH_COLOR_BLACK")
+            ;;
+        "$ESH_COLOR_RED")
+            ;;
+        "$ESH_COLOR_GREEN")
+            ;;
+        "$ESH_COLOR_YELLOW")
+            ;;
+        "$ESH_COLOR_BLUE")
+            ;;
+        "$ESH_COLOR_MAGENTA")
+            ;;
+        "$ESH_COLOR_CYAN")
+            ;;
         "$ESH_COLOR_WHITE")
             ;;
         *)

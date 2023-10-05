@@ -37,8 +37,8 @@ Essenshell is a shell library containing the most common and essential functions
 - `esh_set_app_color <COLOR>` - set application color, only accept [valid colors](#color-variables)
 
 ## Test
-- Dependencies: `bats-core`, `bats-support`, and `bats-assert`
-- `bats` binary must be in path
-- `bats-support`, and `bats-assert` must be in directory specified by `BATS_LIB_PATH`, or in `/usr/local/lib`
-- `test/ut.sh` - run unit tests
+- Dependencies: `docker`
+- `test/ut.sh` - run unit tests in `docker` container
+- `test/cov.sh` - run coverage test in `docker` container
 - `test/manual.sh` - run tests with output for manual verification
+- `.simplecov` - configuration for coverage test

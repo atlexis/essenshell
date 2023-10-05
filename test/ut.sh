@@ -1,10 +1,6 @@
 #!/usr/bin/env bash
 
-# Unit test runner for bats
+ut_command="bats test"
 
-[ -z $BATS_LIB_PATH ] && export BATS_LIB_PATH="/usr/local/lib"
-
-test_dir=$(dirname $(realpath $0))
-
-$test_dir/common.bats
-$test_dir/print.bats
+docker build -t essenshell .
+docker run essenshell bash -c "$ut_command"

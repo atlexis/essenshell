@@ -1,5 +1,3 @@
-#!/usr/bin/env bats
-
 clear="\033[0m"
 black="\033[30;m"
 red="\033[31;m"
@@ -79,6 +77,10 @@ function assert_debug_print {
     assert_print "$magenta" "DEBUG" "$@"
 }
 
+function assert_no_output {
+    assert_output ""
+}
+
 @test "info print 1" {
     run esh_print_info "foo"
 
@@ -118,7 +120,7 @@ function assert_debug_print {
 @test "debug print not enabled by default" {
     run esh_print_debug "this should not be seen"
 
-    refute_output
+    assert_no_output
 }
 
 @test "debug print enabled" {
@@ -134,7 +136,7 @@ function assert_debug_print {
 
     run esh_print_debug "this should not be seen"
 
-    refute_output
+    assert_no_output
 }
 
 @test "info print with app name" {
@@ -176,7 +178,7 @@ function assert_debug_print {
 
     run esh_print_debug "foo bar baz"
 
-    refute_output
+    assert_no_output
 }
 
 @test "overwrite app name with function" {
@@ -250,7 +252,7 @@ function assert_debug_print {
 
     run esh_print_debug "foo bar baz"
 
-    refute_output
+    assert_no_output
 }
 
 @test "set app name in red color" {
