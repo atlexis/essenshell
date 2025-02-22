@@ -10,7 +10,10 @@ Essenshell is a shell library containing the most common and essential functions
 
 ## Usage
 - Environment variable `"ESSENSHELL_PATH"` must be set before anything is sourced.
+    - The directory where `essenshell/` is installed on the system.
+    - E.g. `ESSENSHELL_PATH="$HOME/.local/lib/essenshell"`
 - `source essenshell.sh` - include the [entire library](#global).
+- `source files.sh` - include the [files sub-library](#filessh)
 - `source print.sh` - include the [print sub-library](#printsh)
 - **Note**: Sourced variables and functions beginning with an underscore are private variables and are only intended for internal use, do not rely on these directly since their APIs are not stable and might change at any time.
 
@@ -21,10 +24,20 @@ Essenshell is a shell library containing the most common and essential functions
 - Functions:
 - `esh_version` - print version of essenshell
 - Includes:
-    - [print.sh](#print)
+    - [files.sh](#filessh)
+    - [print.sh](#printsh)
+
+### files.sh
+- Included with `source "$ESSENSHELL_PATH/files.sh"`
+- Functions:
+    - `esh_copy_file <SRC> [<DEST>]` - copy file recursively
+        - requires environment variables: `SOURCE_DIR` and `DEST_DIR`
+        - `<SRC>` - path to source file, relative from `SOURCE_DIR`.
+        - `<DEST>` - optional path to destination file, relative from `DEST_DIR`, will be same as `<SRC>` if not specified.
+        - will fail if destination file already exists
 
 ### print.sh
-- Included with `source print.sh`
+- Included with `source "$ESSENSHELL_PATH/print.sh"`
 - `env ESH_DEBUG=true ./myScript.sh` - enable debug prints
 - Variables:
     - `ESH_DEBUG`

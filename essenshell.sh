@@ -10,3 +10,4 @@ function esh_version {
 }
 
 source "$ESSENSHELL_PATH/print.sh"
+source "$ESSENSHELL_PATH/files.sh"
