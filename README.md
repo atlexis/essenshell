@@ -22,7 +22,7 @@ Essenshell is a shell library containing the most common and essential functions
 
 ### Templates
 - Copy the content of any template file into your user script
-- _Neovim_ example: `:read "$ESSENSHELL_PATH/templates/verify_essenshell_path"`
+- _Neovim_ example: `:read $ESSENSHELL_PATH/templates/verify_essenshell_path`
 - `templates/verify_essenshell_path`
     - verify that `ESSENSHELL_PATH` environment variable is set
     - fallback and try default path if not, `$HOME/.local/lib/essenshell`
