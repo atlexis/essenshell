@@ -96,3 +96,42 @@ function esh_symlink_file () {
 
     echo "Linked $source_file --> $dest_file"
 }
+
+# esh_remove_symlink() : remove symbolic link
+# $DEST_DIR : directory to create symbolic link file path from
+# $1 : path to symbolic link file, relative from $DEST_DIR
+# Return codes:
+# - 0: successful removal of symbolic link
+# - 1: mandatory environmental and positional variables are unspecified
+# - 2: symbolic link to remove does not exist
+# - 3: symbolic link to remove is not a symbolic link
+function esh_remove_symlink() {
+    if [ -z "$DEST_DIR" ]; then
+        echo "Environment variable DEST_DIR must be set."
+        return 1
+    fi
+
+    if [ $# -lt 1 ]; then
+        echo "Missing first positional argument: symbolic link to remove."
+        return 1
+    fi
+
+    symlink_file="$DEST_DIR/$1"
+
+    if ! [ -e "$symlink_file" ]; then
+        echo "Symbolic link to remove does not exist: $symlink_file"
+        return 2
+    fi
+
+    if ! [ -h "$symlink_file" ]; then
+        echo "Symbolic link to remove is not a symbolic link: $symlink_file"
+        return 3
+    fi
+
+    target_file="$(readlink "$symlink_file")"
+
+    # do not care if symbolic link is broken and target file does not exist, remove anyway.
+    rm "$symlink_file"
+
+    echo "Unlinking $symlink_file -x-> $target_file"
+}

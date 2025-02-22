@@ -52,6 +52,14 @@ Essenshell is a shell library containing the most common and essential functions
             - **1**: mandatory environmental and positional variables are unspecified
             - **2**: source file does not exist
             - **3**: destination file already exists
+    - `esh_remove_symlink <LINK>` : remove symbolic link
+        -  `$DEST_DIR` : directory to create symbolic link file path from
+        - `$1` : path to symbolic link file, relative from `$DEST_DIR`
+        - Return codes:
+            - **0**: successful removal of symbolic link
+            - **1**: mandatory environmental and positional variables are unspecified
+            - **2**: symbolic link to remove does not exist
+            - **3**: symbolic link to remove is not a symbolic link
 
 ### print.sh
 - Included with `source "$ESSENSHELL_PATH/print.sh"`
