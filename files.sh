@@ -1,6 +1,12 @@
-# copies file recursively from $SOURCE_DIR to $DEST_DIR
+# esh_copy_file() : copy file or directory recursively from source file to destination file
+# $SOURCE_DIR : directory to create source file path from
+# $DEST_DIR : directory to create destination file path from
 # $1 : path to source file, relative from $SOURCE_DIR
-# $2 (optional) : path to dest dir, relative from $DEST_DIR, will be same as $1 if not specified
+# $2 (optional) : path to destination file, relative from $DEST_DIR, will be same as $1 if omitted
+# Errors:
+# - mandatory environmental and positional variables are unspecified
+# - source file does not exist
+# - destination file already exists
 function esh_copy_file () {
     if [ -z "$SOURCE_DIR" ]; then
         echo "Environment variable SOURCE_DIR must be set."

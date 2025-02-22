@@ -32,11 +32,15 @@ Essenshell is a shell library containing the most common and essential functions
 ### files.sh
 - Included with `source "$ESSENSHELL_PATH/files.sh"`
 - Functions:
-    - `esh_copy_file <SRC> [<DEST>]` - copy file recursively
-        - requires environment variables: `SOURCE_DIR` and `DEST_DIR`
-        - `<SRC>` - path to source file, relative from `SOURCE_DIR`.
-        - `<DEST>` - optional path to destination file, relative from `DEST_DIR`, will be same as `<SRC>` if not specified.
-        - will fail if destination file already exists
+    - `esh_copy_file <SRC> [<DEST>]` : copy file or directory recursively from source file to destination file
+        - `$SOURCE_DIR` : directory to create source file path from
+        - `$DEST_DIR` : directory to create destination file path form
+        - `$1` (`<SRC>`) - path to source file, relative from `$SOURCE_DIR`.
+        - `$2` (`<DEST>`) - **optional**, path to destination file, relative from `$DEST_DIR`, will be same as `$1` if omitted.
+        - Will fail if:
+            - mandatory environmental and positional variables are unspecified
+            - source file does not exist
+            - destination file already exists
 
 ### print.sh
 - Included with `source "$ESSENSHELL_PATH/print.sh"`
