@@ -14,10 +14,20 @@ Essenshell is a shell library containing the most common and essential functions
 - Environment variable `"ESSENSHELL_PATH"` must be set before anything is sourced.
     - The directory where `essenshell/` is installed on the system.
     - E.g. `ESSENSHELL_PATH="$HOME/.local/lib/essenshell"`
+- Copy a [template](#templates) into a user script to get up and running quickly
 - `source essenshell.sh` - include the [entire library](#global).
 - `source files.sh` - include the [files sub-library](#filessh)
 - `source print.sh` - include the [print sub-library](#printsh)
 - **Note**: Sourced variables and functions beginning with an underscore are private variables and are only intended for internal use, do not rely on these directly since their APIs are not stable and might change at any time.
+
+### Templates
+- Copy the content of any template file into your user script
+- _Neovim_ example: `:read "$ESSENSHELL_PATH/templates/verify_essenshell_path"`
+- `templates/verify_essenshell_path`
+    - verify that `ESSENSHELL_PATH` environment variable is set
+    - fallback and try default path if not, `$HOME/.local/lib/essenshell`
+    - verify that `$ESSENSHELL_PATH/essenshell.sh` is available
+    - source `$ESSENSHELL_PATH/essenshell.sh` into script
 
 ### Global
 - Included with `source essenshell.sh`
