@@ -15,9 +15,11 @@ Essenshell is a shell library containing the most common and essential functions
     - The directory where `essenshell/` is installed on the system.
     - E.g. `ESSENSHELL_PATH="$HOME/.local/lib/essenshell"`
 - Copy a [template](#templates) into a user script to get up and running quickly
-- `source essenshell.sh` - include the [entire library](#global).
-- `source files.sh` - include the [files sub-library](#filessh)
-- `source print.sh` - include the [print sub-library](#printsh)
+- Complete library: [`essenshell.sh`](#global)
+- Sub-libraries:
+    - [`files.sh`](#filessh) - file-related functions
+    - [`print.sh`](#printsh) - print-related functions
+    - [`variables.sh`](#variablessh) - variable-related functions
 - **Note**: Sourced variables and functions beginning with an underscore are private variables and are only intended for internal use, do not rely on these directly since their APIs are not stable and might change at any time.
 
 ### Templates
@@ -94,6 +96,19 @@ Essenshell is a shell library containing the most common and essential functions
     - `esh_print_debug <STRING>` - print string as debug message if debug enabled (`ESH_DEBUG`)
     - `esh_set_app_name <STRING>` - set application name, resets if no or empty string
     - `esh_set_app_color <COLOR>` - set application color, only accept valid colors
+
+### variables.sh
+- Included with `source "$ESSENSHELL_PATH/variables.sh"`
+- Functions:
+    - `esh_mandatory_arg <ARGN> <ERRMSG> [<ARG>...]` : check if positional argument is provided, otherwise exit script
+    - `$1` (`<ARGN>`) : **number**, the position of the mandatory argument
+    - `$2` (`<ERRMSG>`) : error message to print if mandatory argument is missing
+    - `$3`+ (`<ARG>...`): **optional**, list of arguments to check, commonly called with: `$@`
+    - Return codes:
+        - **0**: argument sucessfully found
+        - **1**: exit code, mandatory positional variables are unspecified
+        - **2**: exit code, provided argument position was not a number
+        - **3**: exit code, requested mandatory argument was not provided
 
 ## Test
 - Dependencies: `docker`
