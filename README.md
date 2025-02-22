@@ -101,14 +101,23 @@ Essenshell is a shell library containing the most common and essential functions
 - Included with `source "$ESSENSHELL_PATH/variables.sh"`
 - Functions:
     - `esh_mandatory_arg <ARGN> <ERRMSG> [<ARG>...]` : check if positional argument is provided, otherwise exit script
-    - `$1` (`<ARGN>`) : **number**, the position of the mandatory argument
-    - `$2` (`<ERRMSG>`) : error message to print if mandatory argument is missing
-    - `$3`+ (`<ARG>...`): **optional**, list of arguments to check, commonly called with: `$@`
-    - Return codes:
-        - **0**: argument sucessfully found
-        - **1**: exit code, mandatory positional variables are unspecified
-        - **2**: exit code, provided argument position was not a number
-        - **3**: exit code, requested mandatory argument was not provided
+        - `$1` (`<ARGN>`) : **number**, the position of the mandatory argument
+        - `$2` (`<ERRMSG>`) : error message to print if mandatory argument is missing
+        - `$3`+ (`<ARG>...`) : **optional**, list of arguments to check, commonly called with: `"$@"`
+        - Return codes:
+            - **0**: argument sucessfully found
+            - **1**: exit code, mandatory positional variables are unspecified
+            - **2**: exit code, provided argument position was not a number
+            - **3**: exit code, requested mandatory argument was not provided
+    - `esh_assign_optional_arg <ARGN> <VAR> <DEFAULT> [<ARG>...]` : assign either positional argument or default value to specified variable
+        - `$1` (`<ARGN>`) : **number**, the position of the optional argument
+        - `$2` (`<VAR>`) : **variable**, name of the variable to assign resulting value to
+        - `$3` (`<DEFAULT>`) : default value to assign to variable
+        - `$4`+ (`<ARG>...`) : **optional**, list of arguments to check, commonly called with: `"$@"`
+        - Return codes:
+            - **0**: variable successfully assigned
+            - **1**: exit code, mandatory positional variables are unspecified
+            - **2**: exit code, provided argument position was not a number
 
 ## Test
 - Dependencies: `docker`
