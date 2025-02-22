@@ -31,4 +31,5 @@ SOURCE_DIR="$(dirname $(realpath "$0"))"
 esh_copy_file essenshell.sh
 esh_copy_file files.sh
 esh_copy_file print.sh
+esh_copy_file variables.sh
 esh_copy_file templates
