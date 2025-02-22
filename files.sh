@@ -3,26 +3,32 @@
 # $DEST_DIR : directory to create destination file path from
 # $1 : path to source file, relative from $SOURCE_DIR
 # $2 (optional) : path to destination file, relative from $DEST_DIR, will be same as $1 if omitted
-# Errors:
-# - mandatory environmental and positional variables are unspecified
-# - source file does not exist
-# - destination file already exists
+# Return codes:
+# - 0: successful copy
+# - 1: mandatory environmental and positional variables are unspecified
+# - 2: source file does not exist
+# - 3: destination file already exists
 function esh_copy_file () {
     if [ -z "$SOURCE_DIR" ]; then
         echo "Environment variable SOURCE_DIR must be set."
-        return
+        return 1
     fi
 
     if [ -z "$DEST_DIR" ]; then
         echo "Environment variable DEST_DIR must be set."
-        return
+        return 1
+    fi
+
+    if [ $# -lt 1 ]; then
+        echo "Missing first postitional argument: path to source file."
+        return 1
     fi
 
     local source_file="$SOURCE_DIR/$1"
 
     if ! [ -e "$source_file" ]; then
         echo "Source file not found: $source_file"
-        return
+        return 2
     fi
 
     if [ $# -ge 2 ]; then
@@ -33,7 +39,7 @@ function esh_copy_file () {
 
     if [[ -e "$dest_file" || -h "$dest_file" ]]; then
         echo "Destination file already exist: $dest_file"
-        return
+        return 3
     fi
 
     mkdir -p "$(dirname "$dest_file")"
