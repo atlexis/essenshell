@@ -4,6 +4,8 @@ Essenshell is a shell library containing the most common and essential functions
 
 ## Installation
 - Run `./install.sh` to install files on the system.
+- Requires `ESSENSHELL_PATH` environment variable to be set
+    - `ESSENSHELL_PATH="$PWD" ./install.sh` - install with `essenshell`-files from current working directory
 - Installation directory is determined in following priority order:
     1. First positional argument `./install.sh /Path/To/Install/essenshell-0.1`
     2. Default directory, `$HOME/.local/opt/essenshell-<VERSION>`: `./install.sh`

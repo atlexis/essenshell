@@ -2,22 +2,32 @@
 
 DEFAULT_INSTALL_DIR="$HOME/.local/opt/essenshell-0.1"
 
-if [ $# -ge 1 ]; then
-    install_dir="$1"
-else
-    install_dir="$DEFAULT_INSTALL_DIR"
-fi
-
-if [ -e "$install_dir" ]; then
-    echo "Directory does already exist: $install_dir"
+if [ -z "$ESSENSHELL_PATH" ]; then
+    echo "Environment variable ESSENSHELL_PATH is not set."
     exit 1
 fi
 
-mkdir -p "$install_dir"
+if ! [ -e "$ESSENSHELL_PATH/files.sh" ]; then
+    echo "File not found: $ESSENSHELL_PATH/files.sh"
+    exit 1
+fi
 
-source_dir="$(dirname $(realpath "$0"))"
+source "$ESSENSHELL_PATH/files.sh"
 
-cp -r "$source_dir/essenshell.sh" "$install_dir/"
-echo "Copied $source_dir/essenshell.sh to $install_dir/essenshell.sh"
-cp -r "$source_dir/print.sh" "$install_dir/"
-echo "Copied $source_dir/print.sh to $install_dir/print.sh"
+if [ $# -ge 1 ]; then
+    DEST_DIR="$1"
+else
+    DEST_DIR="$DEFAULT_INSTALL_DIR"
+fi
+
+if [ -e "$DEST_DIR" ]; then
+    echo "Directory does already exist: $DEST_DIR"
+    exit 1
+fi
+
+mkdir -p "$DEST_DIR"
+SOURCE_DIR="$(dirname $(realpath "$0"))"
+
+esh_copy_file essenshell.sh
+esh_copy_file files.sh
+esh_copy_file print.sh
