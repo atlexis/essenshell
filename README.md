@@ -42,6 +42,16 @@ Essenshell is a shell library containing the most common and essential functions
             - **1**: mandatory environmental and positional variables are unspecified
             - **2**: source file does not exist
             - **3**: destination file already exists
+    - `esh_symlink_file <SRC> [<DEST>]` : create symbolic link from source file to destination file
+        - `$SOURCE_DIR` : directory to create source file path from
+        - `$DEST_DIR` : directory to create destination file path from
+        - `$1` (`<SRC>`) : path to source file, relative from `$SOURCE_DIR`
+        - `$2` (`<DEST>`) : **optional**, path to destination file, relative from `$DEST_DIR`, will be same as `$1` if omitted
+        -  Return codes:
+            - **0**: successful symbolic link
+            - **1**: mandatory environmental and positional variables are unspecified
+            - **2**: source file does not exist
+            - **3**: destination file already exists
 
 ### print.sh
 - Included with `source "$ESSENSHELL_PATH/print.sh"`
