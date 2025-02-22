@@ -9,12 +9,12 @@
 # - 3: exit code, requested mandatory argument was not provided
 function esh_mandatory_arg () {
     if [[ $# -lt 1 ]]; then
-        echo "Missing argument: argument position"
+        echo "Missing argument #1: argument position"
         exit 1
     fi
 
-    if [ $# -lt 2 ]; then
-        echo "Missing argument: error message"
+    if [[ $# -lt 2 ]]; then
+        echo "Missing argument #2: error message"
         exit 1
     fi
 
@@ -27,8 +27,8 @@ function esh_mandatory_arg () {
         exit 2
     fi
 
-    if [ $# -lt $argn ]; then
-        echo "Missing argument: $error_message"
+    if [[ $# -lt $argn ]]; then
+        echo "Missing argument #$argn: $error_message"
         exit 3
     fi
 }
