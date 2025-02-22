@@ -19,3 +19,5 @@ source_dir="$(dirname $(realpath "$0"))"
 
 cp -r "$source_dir/essenshell.sh" "$install_dir/"
 echo "Copied $source_dir/essenshell.sh to $install_dir/essenshell.sh"
+cp -r "$source_dir/print.sh" "$install_dir/"
+echo "Copied $source_dir/print.sh to $install_dir/print.sh"
