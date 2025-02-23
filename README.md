@@ -121,9 +121,10 @@ Essenshell is a shell library containing the most common and essential functions
         - **1**: exit code, mandatory positional variables are unspecified
         - **2**: exit code, provided argument position was not a number
         - **3**: exit code, requested mandatory argument was not provided
-- `esh_assign_optional_arg <ARGN> <VAR> <DEFAULT> [<ARG>...]` : assign either positional argument or default value to specified variable
+- `esh_assign_optional_arg <ARGN> <VAR> <DEFAULT> [<ARG>...]` : assign either positional argument or default value to provided variable
+    - # Do not assign to a variable name prefixed with `_esh`. Those names are reserved for internal use by essenshell and might result in errors due to variable scope clashes.
     - `$1` (`<ARGN>`) : **number**, the position of the optional argument
-    - `$2` (`<VAR>`) : **variable**, name of the variable to assign resulting value to
+    - `$2` (`<VAR>`) : **variable**, name of the variable to assign resulting value to, see restrictions above
     - `$3` (`<DEFAULT>`) : default value to assign to variable
     - `$4`+ (`<ARG>...`) : **optional**, list of arguments to check, commonly called with: `"$@"`
     - Return codes:
