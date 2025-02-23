@@ -33,6 +33,45 @@ function esh_mandatory_arg () {
     fi
 }
 
+# esh_assign_mandatory_arg() : try to assign positional argument to provided variable, or show error and exit script
+#
+# Do not assign to a variable name prefixed with "_esh". Those names are reserved for internal use by 
+# essenshell and might result in errors due to variable scope clashes.
+#
+# $1 : number, the position of the mandatory argument
+# $2 : variable, name of the variable to assign resulting value to, see restrictions above
+# $3 : error message to print if mandatory argument is missing
+# $4+ : optional, list of arguments to check, commonly called with: "$@"
+#
+# Return codes:
+# - 0: variable successfully assigned
+# - 1: exit code, mandatory positional variables are unspecified
+# - 2: exit code, provided argument position was not a number
+# - 3: exit code, requested mandatory argument was not provided
+function esh_assign_mandatory_arg () {
+    esh_mandatory_arg 1 "argument position" "$@"
+    esh_mandatory_arg 2 "output variable" "$@"
+    esh_mandatory_arg 3 "error message" "$@"
+
+    local _esh_am_argn="$1"
+    local _esh_am_output_var="$2"
+    local _esh_am_error_message="$3"
+    shift 3
+
+    if [[ ! "$_esh_am_argn" =~ ^[0-9]+$ ]]; then
+        echo "Argument position must be a number: $_esh_am_argn"
+        exit 2
+    fi
+
+    if [[ $# -lt $_esh_am_argn ]]; then
+        echo "Missing argument #$_esh_am_argn: $_esh_am_error_message"
+        exit 3
+    fi
+
+    local _am_args=("$@")
+    printf -v "$_esh_am_output_var" "${_am_args[$((_esh_am_argn-1))]}"
+}
+
 # esh_assign_optional_arg() : assign either positional argument or default value to specified variable
 # $1 : number, the position of the optional argument
 # $2 : variable, name of the variable to assign resulting value to
