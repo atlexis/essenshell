@@ -43,35 +43,48 @@ Essenshell is a shell library containing the most common and essential functions
 
 ### files.sh
 - Included with `source "$ESSENSHELL_PATH/files.sh"`
-- Functions:
-    - `esh_copy_file <SRC> [<DEST>]` : copy file or directory recursively from source file to destination file
-        - `$SOURCE_DIR` : directory to create source file path from
-        - `$DEST_DIR` : directory to create destination file path form
-        - `$1` (`<SRC>`) - path to source file, relative from `$SOURCE_DIR`.
-        - `$2` (`<DEST>`) - **optional**, path to destination file, relative from `$DEST_DIR`, will be same as `$1` if omitted.
-        - Return codes:
-            - **0**: successful copy
-            - **1**: mandatory environmental and positional variables are unspecified
-            - **2**: source file does not exist
-            - **3**: destination file already exists
-    - `esh_symlink_file <SRC> [<DEST>]` : create symbolic link from source file to destination file
-        - `$SOURCE_DIR` : directory to create source file path from
-        - `$DEST_DIR` : directory to create destination file path from
-        - `$1` (`<SRC>`) : path to source file, relative from `$SOURCE_DIR`
-        - `$2` (`<DEST>`) : **optional**, path to destination file, relative from `$DEST_DIR`, will be same as `$1` if omitted
-        -  Return codes:
-            - **0**: successful symbolic link
-            - **1**: mandatory environmental and positional variables are unspecified
-            - **2**: source file does not exist
-            - **3**: destination file already exists
-    - `esh_remove_symlink <LINK>` : remove symbolic link
-        -  `$DEST_DIR` : directory to create symbolic link file path from
-        - `$1` : path to symbolic link file, relative from `$DEST_DIR`
-        - Return codes:
-            - **0**: successful removal of symbolic link
-            - **1**: mandatory environmental and positional variables are unspecified
-            - **2**: symbolic link to remove does not exist
-            - **3**: symbolic link to remove is not a symbolic link
+
+### files.sh functions:
+- `esh_copy_file <SRC> [<DEST>]` : copy file or directory recursively from source file to destination file
+    - `$SOURCE_DIR` : directory to create source file path from
+    - `$DEST_DIR` : directory to create destination file path form
+    - `$1` (`<SRC>`) - path to source file, relative from `$SOURCE_DIR`.
+    - `$2` (`<DEST>`) - **optional**, path to destination file, relative from `$DEST_DIR`, will be same as `$1` if omitted.
+    - Return codes:
+        - **0**: successful copy
+        - **1**: mandatory environmental and positional variables are unspecified
+        - **2**: source file does not exist
+        - **3**: destination file already exists
+- `esh_symlink_file <SRC> [<DEST>]` : create symbolic link from source file to destination file
+    - `$SOURCE_DIR` : directory to create source file path from
+    - `$DEST_DIR` : directory to create destination file path from
+    - `$1` (`<SRC>`) : path to source file, relative from `$SOURCE_DIR`
+    - `$2` (`<DEST>`) : **optional**, path to destination file, relative from `$DEST_DIR`, will be same as `$1` if omitted
+    -  Return codes:
+        - **0**: successful symbolic link
+        - **1**: mandatory environmental and positional variables are unspecified
+        - **2**: source file does not exist
+        - **3**: destination file already exists
+- `esh_remove_symlink <LINK>` : remove symbolic link
+    -  `$DEST_DIR` : directory to create symbolic link file path from
+    - `$1` : path to symbolic link file, relative from `$DEST_DIR`
+    - Return codes:
+        - **0**: successful removal of symbolic link
+        - **1**: mandatory environmental and positional variables are unspecified
+        - **2**: symbolic link to remove does not exist
+        - **3**: symbolic link to remove is not a symbolic link
+- `esh_replace_symlink <SRC> [<DEST>]` : create or replace symbolic link from destination file to source file.
+    - Ask for confirmation before removing an existing symbolic link.
+    - Will skip symbolic links already pointing to the wanted source file.
+    - `$SOURCE_DIR` : directory to create source file path from
+    - `$DEST_DIR` : directory to create destination file path from
+    - `$1` (`<SRC>`) : path to source file, relative from `$SOURCE_DIR`
+    - `$2` (`<DEST>`) : **optional**, path to destination file, relative from `$DEST_DIR`, will be same as $1 if omitted
+    - Return codes:
+        - **0**: successful symbolic link
+        - **1**: mandatory environmental and positional variables are unspecified
+        - **2**: source file does not exist
+        - **3**: unknown answer after prompt
 
 ### print.sh
 - Included with `source "$ESSENSHELL_PATH/print.sh"`
