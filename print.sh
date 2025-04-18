@@ -56,24 +56,24 @@ function _esh_print_prompt {
 
 function esh_print_info {
     local message=$1
-    _esh_print_prompt "$ESH_GREEN" "INFO" "$message"
+    _esh_print_prompt "$ESH_BOLD_BRIGHT_GREEN" "INFO" "$message"
 }
 
 function esh_print_warning {
     local message=$1
-    _esh_print_prompt "$ESH_YELLOW" "WARNING" "$message"
+    _esh_print_prompt "$ESH_BOLD_BRIGHT_YELLOW" "WARNING" "$message"
 }
 
 function esh_print_error {
     local message=$1
-    _esh_print_prompt "$ESH_RED" "ERROR" "$message"
+    _esh_print_prompt "$ESH_BOLD_BRIGHT_RED" "ERROR" "$message"
 }
 
 function esh_print_debug {
     $ESH_DEBUG || return
 
     local message=$1
-    _esh_print_prompt "$ESH_MAGENTA" "DEBUG" "$message"
+    _esh_print_prompt "$ESH_BOLD_BRIGHT_MAGENTA" "DEBUG" "$message"
 }
 
 function esh_set_app_name {
