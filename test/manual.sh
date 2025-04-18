@@ -74,3 +74,34 @@ esh_set_app_color $ESH_BRIGHT_CYAN
 esh_print_info "info with app name in bright cyan"
 esh_set_app_color $ESH_BRIGHT_WHITE
 esh_print_info "info with app name in bright white"
+
+esh_set_app_color $ESH_BOLD_BLACK
+esh_print_info "info with app name in bold black"
+esh_set_app_color $ESH_BOLD_RED
+esh_print_info "info with app name in bold red"
+esh_set_app_color $ESH_BOLD_GREEN
+esh_print_info "info with app name in bold green"
+esh_set_app_color $ESH_BOLD_YELLOW
+esh_print_info "info with app name in bold yellow"
+esh_set_app_color $ESH_BOLD_BLUE
+esh_print_info "info with app name in bold blue"
+esh_set_app_color $ESH_BOLD_MAGENTA
+esh_print_info "info with app name in bold magenta"
+esh_set_app_color $ESH_BOLD_CYAN
+esh_print_info "info with app name in bold cyan"
+esh_set_app_color $ESH_BOLD_BRIGHT_BLACK
+esh_print_info "info with app name in bold bright black"
+esh_set_app_color $ESH_BOLD_BRIGHT_RED
+esh_print_info "info with app name in bold bright red"
+esh_set_app_color $ESH_BOLD_BRIGHT_GREEN
+esh_print_info "info with app name in bold bright green"
+esh_set_app_color $ESH_BOLD_BRIGHT_YELLOW
+esh_print_info "info with app name in bold bright yellow"
+esh_set_app_color $ESH_BOLD_BRIGHT_BLUE
+esh_print_info "info with app name in bold bright blue"
+esh_set_app_color $ESH_BOLD_BRIGHT_MAGENTA
+esh_print_info "info with app name in bold bright magenta"
+esh_set_app_color $ESH_BOLD_BRIGHT_CYAN
+esh_print_info "info with app name in bold bright cyan"
+esh_set_app_color $ESH_BOLD_BRIGHT_WHITE
+esh_print_info "info with app name in bold bright white"
