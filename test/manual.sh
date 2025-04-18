@@ -5,14 +5,22 @@ source essenshell.sh
 echo "--- Variables ---"
 
 echo Version: $ESH_VERSION
-echo -e ${ESH_COLOR_BLACK}BLACK${ESH_CLEAR} CLEAR
-echo -e ${ESH_COLOR_RED}RED${ESH_CLEAR} CLEAR
-echo -e ${ESH_COLOR_GREEN}GREEN${ESH_CLEAR} CLEAR
-echo -e ${ESH_COLOR_YELLOW}YELLOW${ESH_CLEAR} CLEAR
-echo -e ${ESH_COLOR_BLUE}BLUE${ESH_CLEAR} CLEAR
-echo -e ${ESH_COLOR_MAGENTA}MAGENTA${ESH_CLEAR} CLEAR
-echo -e ${ESH_COLOR_CYAN}CYAN${ESH_CLEAR} CLEAR
-echo -e ${ESH_COLOR_WHITE}WHITE${ESH_CLEAR} CLEAR
+echo -e ${ESH_BLACK}BLACK${ESH_CLEAR} CLEAR
+echo -e ${ESH_RED}RED${ESH_CLEAR} CLEAR
+echo -e ${ESH_GREEN}GREEN${ESH_CLEAR} CLEAR
+echo -e ${ESH_YELLOW}YELLOW${ESH_CLEAR} CLEAR
+echo -e ${ESH_BLUE}BLUE${ESH_CLEAR} CLEAR
+echo -e ${ESH_MAGENTA}MAGENTA${ESH_CLEAR} CLEAR
+echo -e ${ESH_CYAN}CYAN${ESH_CLEAR} CLEAR
+echo -e ${ESH_WHITE}WHITE${ESH_CLEAR} CLEAR
+echo -e ${ESH_BRIGHT_BLACK}BRIGHT BLACK${ESH_CLEAR} CLEAR
+echo -e ${ESH_BRIGHT_RED}BRIGHT RED${ESH_CLEAR} CLEAR
+echo -e ${ESH_BRIGHT_GREEN}BRIGHT GREEN${ESH_CLEAR} CLEAR
+echo -e ${ESH_BRIGHT_YELLOW}BRIGHT YELLOW${ESH_CLEAR} CLEAR
+echo -e ${ESH_BRIGHT_BLUE}BRIGHT BLUE${ESH_CLEAR} CLEAR
+echo -e ${ESH_BRIGHT_MAGENTA}BRIGHT MAGENTA${ESH_CLEAR} CLEAR
+echo -e ${ESH_BRIGHT_CYAN}BRIGHT CYAN${ESH_CLEAR} CLEAR
+echo -e ${ESH_BRIGHT_WHITE}BRIGHT WHITE${ESH_CLEAR} CLEAR
 
 echo
 echo "--- Functions ---"
@@ -32,23 +40,37 @@ esh_print_warning "warning with app name"
 esh_print_error "error with app name"
 esh_print_debug "debug with app name"
 
-esh_set_app_color $ESH_COLOR_BLACK
+esh_set_app_color $ESH_BLACK
 esh_print_info "info with app name in black"
 esh_print_warning "warning with app name in black"
 esh_print_error "error with app name in black"
 esh_print_debug "debug with app name in black"
 
-esh_set_app_color $ESH_COLOR_RED
+esh_set_app_color $ESH_RED
 esh_print_info "info with app name in red"
-esh_set_app_color $ESH_COLOR_GREEN
+esh_set_app_color $ESH_GREEN
 esh_print_info "info with app name in green"
-esh_set_app_color $ESH_COLOR_YELLOW
+esh_set_app_color $ESH_YELLOW
 esh_print_info "info with app name in yellow"
-esh_set_app_color $ESH_COLOR_BLUE
+esh_set_app_color $ESH_BLUE
 esh_print_info "info with app name in blue"
-esh_set_app_color $ESH_COLOR_MAGENTA
+esh_set_app_color $ESH_MAGENTA
 esh_print_info "info with app name in magenta"
-esh_set_app_color $ESH_COLOR_CYAN
+esh_set_app_color $ESH_CYAN
 esh_print_info "info with app name in cyan"
-esh_set_app_color $ESH_COLOR_WHITE
-esh_print_info "info with app name in white"
+esh_set_app_color $ESH_BRIGHT_BLACK
+esh_print_info "info with app name in bright black"
+esh_set_app_color $ESH_BRIGHT_RED
+esh_print_info "info with app name in bright red"
+esh_set_app_color $ESH_BRIGHT_GREEN
+esh_print_info "info with app name in bright green"
+esh_set_app_color $ESH_BRIGHT_YELLOW
+esh_print_info "info with app name in bright yellow"
+esh_set_app_color $ESH_BRIGHT_BLUE
+esh_print_info "info with app name in bright blue"
+esh_set_app_color $ESH_BRIGHT_MAGENTA
+esh_print_info "info with app name in bright magenta"
+esh_set_app_color $ESH_BRIGHT_CYAN
+esh_print_info "info with app name in bright cyan"
+esh_set_app_color $ESH_BRIGHT_WHITE
+esh_print_info "info with app name in bright white"

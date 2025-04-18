@@ -94,14 +94,22 @@ Essenshell is a shell library containing the most common and essential functions
         - set to true to enable debug prints, false by default
         - keeps its original value if set before sourcing `essenshell.sh`
     - `ESH_CLEAR` - normal text
-    - `ESH_COLOR_BLACK` - black foreground
-    - `ESH_COLOR_RED` - red foreground
-    - `ESH_COLOR_GREEN` - green foreground
-    - `ESH_COLOR_YELLOW` - yellow foreground
-    - `ESH_COLOR_BLUE` - blue foreground
-    - `ESH_COLOR_MAGENTA` - magenta foreground
-    - `ESH_COLOR_CYAN` - cyan foreground
-    - `ESH_COLOR_WHITE` - white foreground
+    - `ESH_BLACK` - black foreground
+    - `ESH_RED` - red foreground
+    - `ESH_GREEN` - green foreground
+    - `ESH_YELLOW` - yellow foreground
+    - `ESH_BLUE` - blue foreground
+    - `ESH_MAGENTA` - magenta foreground
+    - `ESH_CYAN` - cyan foreground
+    - `ESH_WHITE` - white foreground
+    - `ESH_BRIGHT_BLACK` - bright black foreground
+    - `ESH_BRIGHT_RED` - bright red foreground
+    - `ESH_BRIGHT_GREEN` - bright green foreground
+    - `ESH_BRIGHT_YELLOW` - bright yellow foreground
+    - `ESH_BRIGHT_BLUE` - bright blue foreground
+    - `ESH_BRIGHT_MAGENTA` - bright magenta foreground
+    - `ESH_BRIGHT_CYAN` - bright cyan foreground
+    - `ESH_BRIGHT_WHITE` - bright white foreground
 - Functions:
     - `esh_print_info <STRING>` - print string as info message
     - `esh_print_warning <STRING>` - print string as warning message

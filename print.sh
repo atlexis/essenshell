@@ -1,12 +1,21 @@
 ESH_CLEAR="\033[0m"
-ESH_COLOR_BLACK="\033[30m"
-ESH_COLOR_RED="\033[31m"
-ESH_COLOR_GREEN="\033[32m"
-ESH_COLOR_YELLOW="\033[33m"
-ESH_COLOR_BLUE="\033[34m"
-ESH_COLOR_MAGENTA="\033[35m"
-ESH_COLOR_CYAN="\033[36m"
-ESH_COLOR_WHITE="\033[37m"
+
+ESH_BLACK="\033[30m"
+ESH_RED="\033[31m"
+ESH_GREEN="\033[32m"
+ESH_YELLOW="\033[33m"
+ESH_BLUE="\033[34m"
+ESH_MAGENTA="\033[35m"
+ESH_CYAN="\033[36m"
+ESH_WHITE="\033[37m"
+ESH_BRIGHT_BLACK="\033[90m"
+ESH_BRIGHT_RED="\033[91m"
+ESH_BRIGHT_GREEN="\033[92m"
+ESH_BRIGHT_YELLOW="\033[93m"
+ESH_BRIGHT_BLUE="\033[94m"
+ESH_BRIGHT_MAGENTA="\033[95m"
+ESH_BRIGHT_CYAN="\033[96m"
+ESH_BRIGHT_WHITE="\033[97m"
 
 [ -z ${ESH_DEBUG+x} ] && ESH_DEBUG=false
 
@@ -29,24 +38,24 @@ function _esh_print_prompt {
 
 function esh_print_info {
     local message=$1
-    _esh_print_prompt "$ESH_COLOR_GREEN" "INFO" "$message"
+    _esh_print_prompt "$ESH_GREEN" "INFO" "$message"
 }
 
 function esh_print_warning {
     local message=$1
-    _esh_print_prompt "$ESH_COLOR_YELLOW" "WARNING" "$message"
+    _esh_print_prompt "$ESH_YELLOW" "WARNING" "$message"
 }
 
 function esh_print_error {
     local message=$1
-    _esh_print_prompt "$ESH_COLOR_RED" "ERROR" "$message"
+    _esh_print_prompt "$ESH_RED" "ERROR" "$message"
 }
 
 function esh_print_debug {
     $ESH_DEBUG || return
 
     local message=$1
-    _esh_print_prompt "$ESH_COLOR_MAGENTA" "DEBUG" "$message"
+    _esh_print_prompt "$ESH_MAGENTA" "DEBUG" "$message"
 }
 
 function esh_set_app_name {
@@ -61,24 +70,26 @@ function esh_set_app_color {
     local color=$1
 
     case "$color" in
-        "$ESH_COLOR_BLACK")
-            ;;
-        "$ESH_COLOR_RED")
-            ;;
-        "$ESH_COLOR_GREEN")
-            ;;
-        "$ESH_COLOR_YELLOW")
-            ;;
-        "$ESH_COLOR_BLUE")
-            ;;
-        "$ESH_COLOR_MAGENTA")
-            ;;
-        "$ESH_COLOR_CYAN")
-            ;;
-        "$ESH_COLOR_WHITE")
+        "$ESH_BLACK"|\
+        "$ESH_RED"|\
+        "$ESH_GREEN"|\
+        "$ESH_YELLOW"|\
+        "$ESH_BLUE"|\
+        "$ESH_MAGENTA"|\
+        "$ESH_CYAN"|\
+        "$ESH_WHITE"|\
+        "$ESH_BRIGHT_BLACK"|\
+        "$ESH_BRIGHT_RED"|\
+        "$ESH_BRIGHT_GREEN"|\
+        "$ESH_BRIGHT_YELLOW"|\
+        "$ESH_BRIGHT_BLUE"|\
+        "$ESH_BRIGHT_MAGENTA"|\
+        "$ESH_BRIGHT_CYAN"|\
+        "$ESH_BRIGHT_WHITE")
             ;;
         *)
             return
+            esh_print_error "Trying to set an invalid app color."
             ;;
     esac
 
