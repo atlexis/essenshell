@@ -44,7 +44,7 @@ function esh_copy_file () {
 
     mkdir -p "$(dirname "$dest_file")"
     cp -r "$source_file" "$dest_file"
-    echo "Copied $source_file -> $dest_file"
+    echo "Copied $source_file >> $dest_file"
 }
 
 # esh_symlink_file() : create symbolic link from source file to destination file
@@ -94,7 +94,7 @@ function esh_symlink_file () {
     mkdir -p "$(dirname "$dest_file")"
     ln -s "$source_file" "$dest_file"
 
-    echo "Linked $source_file --> $dest_file"
+    echo "Linked $dest_file -> $source_file"
 }
 
 # esh_remove_symlink() : remove symbolic link
