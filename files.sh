@@ -2,6 +2,7 @@
 _ESH_FILES_LOADED=true
 
 source "$ESSENSHELL_PATH/print.sh"
+source "$ESSENSHELL_PATH/variables.sh"
 
 # esh_copy_file() : copy file or directory recursively from source file to destination file
 # $SOURCE_DIR : directory to create source file path from
@@ -10,24 +11,14 @@ source "$ESSENSHELL_PATH/print.sh"
 # $2 (optional) : path to destination file, relative from $DEST_DIR, will be same as $1 if omitted
 # Return codes:
 # - 0: successful copy
-# - 1: mandatory environmental and positional variables are unspecified
 # - 2: source file does not exist
 # - 3: destination file already exists
+# - 3: exit code, mandatory positional argument was not provided
+# - 4: exit code, mandatory environment variable was not defined
 function esh_copy_file () {
-    if [ -z "$SOURCE_DIR" ]; then
-        esh_print_error "Environment variable ${ESH_BOLD_BRIGHT_WHITE}SOURCE_DIR${ESH_CLEAR} must be set."
-        return 1
-    fi
-
-    if [ -z "$DEST_DIR" ]; then
-        esh_print_error "Environment variable ${ESH_BOLD_BRIGHT_WHITE}DEST_DIR${ESH_CLEAR} must be set."
-        return 1
-    fi
-
-    if [ $# -lt 1 ]; then
-        esh_print_error "Missing first postitional argument: ${ESH_BOLD_BRIGHT_WHITE}path to source file.${ESH_CLEAR}"
-        return 1
-    fi
+    esh_mandatory_env SOURCE_DIR
+    esh_mandatory_env DEST_DIR
+    esh_mandatory_arg 1 "path to source file" "$@"
 
     local source_file="$SOURCE_DIR/$1"
 
@@ -62,21 +53,12 @@ function esh_copy_file () {
 # - 1: mandatory environmental and positional variables are unspecified
 # - 2: source file does not exist
 # - 3: destination file already exists
+# - 3: exit code, mandatory positional argument was not provided
+# - 4: exit code, mandatory environment variable was not defined
 function esh_symlink_file () {
-    if [ -z "$SOURCE_DIR" ]; then
-        esh_print_error "Environment variable ${ESH_BOLD_BRIGHT_WHITE}SOURCE_DIR${ESH_CLEAR} must be set."
-        return 1
-    fi
-
-    if [ -z "$DEST_DIR" ]; then
-        esh_print_error "Environment variable ${ESH_BOLD_BRIGHT_WHITE}DEST_DIR${ESH_CLEAR} must be set."
-        return 1
-    fi
-
-    if [ $# -lt 1 ]; then
-        esh_print_error "Missing first postitional argument: ${ESH_BOLD_BRIGHT_WHITE}path to source file.${ESH_CLEAR}"
-        return 1
-    fi
+    esh_mandatory_env SOURCE_DIR
+    esh_mandatory_env DEST_DIR
+    esh_mandatory_arg 1 "path to source file" "$@"
 
     source_file="$SOURCE_DIR/$1"
 
@@ -110,16 +92,11 @@ function esh_symlink_file () {
 # - 1: mandatory environmental and positional variables are unspecified
 # - 2: symbolic link to remove does not exist
 # - 3: symbolic link to remove is not a symbolic link
+# - 3: exit code, mandatory positional argument was not provided
+# - 4: exit code, mandatory environment variable was not defined
 function esh_remove_symlink() {
-    if [ -z "$DEST_DIR" ]; then
-        esh_print_error "Environment variable ${ESH_BOLD_BRIGHT_WHITE}DEST_DIR${ESH_CLEAR} must be set."
-        return 1
-    fi
-
-    if [ $# -lt 1 ]; then
-        esh_print_error "Missing first positional argument: ${ESH_BOLD_BRIGHT_WHITE}symbolic link to remove.${ESH_CLEAR}"
-        return 1
-    fi
+    esh_mandatory_env DEST_DIR
+    esh_mandatory_arg 1 "symbolic link to remove" "$@"
 
     symlink_file="$DEST_DIR/$1"
 
@@ -155,21 +132,12 @@ function esh_remove_symlink() {
 # - 1: mandatory environmental and positional variables are unspecified
 # - 2: source file does not exist
 # - 3: unknown answer after prompt
+# - 3: exit code, mandatory positional argument was not provided
+# - 4: exit code, mandatory environment variable was not defined
 function esh_replace_symlink() {
-    if [ -z "$SOURCE_DIR" ]; then
-        esh_print_error "Environment variable ${ESH_BOLD_WHITE}SOURCE_DIR${ESH_CLEAR} must be set."
-        return 1
-    fi
-
-    if [ -z "$DEST_DIR" ]; then
-        esh_print_error "Environment variable ${ESH_BOLD_WHITE}DEST_DIR${ESH_CLEAR} must be set."
-        return 1
-    fi
-
-    if [ $# -lt 1 ]; then
-        esh_print_error "Missing first postitional argument: ${ESH_BOLD_WHITE}path to source file${ESH_CLEAR}"
-        return 1
-    fi
+    esh_mandatory_env SOURCE_DIR
+    esh_mandatory_env DEST_DIR
+    esh_mandatory_arg 1 "path to source file" "$@"
 
     source_file="$SOURCE_DIR/$1"
 
