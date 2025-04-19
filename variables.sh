@@ -1,3 +1,6 @@
+[[ -n "${_ESH_VARIABLES_LOADED}" ]] && return
+_ESH_VARIABLES_LOADED=true
+
 # esh_mandatory_arg() : check if positional argument is provided, otherwise exit script
 #
 # $1 : number, the position of the mandatory argument

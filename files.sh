@@ -1,3 +1,6 @@
+[[ -n "${_ESH_FILES_LOADED}" ]] && return
+_ESH_FILES_LOADED=true
+
 # esh_copy_file() : copy file or directory recursively from source file to destination file
 # $SOURCE_DIR : directory to create source file path from
 # $DEST_DIR : directory to create destination file path from
