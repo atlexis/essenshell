@@ -117,3 +117,21 @@ function esh_assign_optional_arg () {
         printf -v "$_esh_ao_output_var" "${_esh_am_args[$((_esh_ao_argn-1))]}"
     fi
 }
+
+# esh_mandatory_env() : check if environment variable is defined, otherwise exit script
+#
+# $1 : string, name of the environment variable to check
+#
+# Return codes:
+# - 0: environment variable is set
+# - 1: exit code, mandatory positional variables are unspecified
+# - 4: exit code, mandatory environment variable is undefined
+function esh_mandatory_env () {
+    local _esh_me_env
+    esh_assign_mandatory_arg 1 _esh_me_env "environment variable name" "$@"
+
+    if [ -z "${!_esh_me_env}" ]; then
+        esh_print_error "Environment variable ${ESH_BOLD_BRIGHT_WHITE}${_esh_me_env}${ESH_CLEAR} must be set."
+        exit 4
+    fi
+}

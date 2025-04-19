@@ -169,6 +169,12 @@ Essenshell is a shell library containing the most common and essential functions
         - **0**: variable successfully assigned
         - **1**: exit code, mandatory positional variables are unspecified
         - **2**: exit code, provided argument position was not a number
+- `esh_mandatory_env <ENV_NAME>` : check if environment variable is defined, otherwise exit script
+    - `$1` : **string**, name of the environment variable to check
+    - Return codes:
+        - **0**: environment variable is set
+        - **1**: exit code, mandatory positional variables are unspecified
+        - **4**: exit code, mandatory environment variable is undefined
 
 ## Test
 - Dependencies: `docker`
