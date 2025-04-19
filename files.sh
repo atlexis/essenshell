@@ -121,14 +121,14 @@ function esh_remove_symlink() {
 
     symlink_file="$DEST_DIR/$1"
 
-    if ! [ -e "$symlink_file" ]; then
-        echo "Symbolic link to remove does not exist: $symlink_file"
-        return 2
-    fi
-
     if ! [ -h "$symlink_file" ]; then
-        echo "Symbolic link to remove is not a symbolic link: $symlink_file"
-        return 3
+        if ! [ -e "$symlink_file" ]; then
+            echo "Symbolic link to remove does not exist: $symlink_file"
+            return 2
+        else
+            echo "Symbolic link to remove is not a symbolic link: $symlink_file"
+            return 3
+        fi
     fi
 
     target_file="$(readlink "$symlink_file")"
