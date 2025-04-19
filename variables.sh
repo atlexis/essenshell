@@ -1,6 +1,8 @@
 [[ -n "${_ESH_VARIABLES_LOADED}" ]] && return
 _ESH_VARIABLES_LOADED=true
 
+source "$ESSENSHELL_PATH/print.sh"
+
 # esh_mandatory_arg() : check if positional argument is provided, otherwise exit script
 #
 # $1 : number, the position of the mandatory argument
@@ -14,12 +16,12 @@ _ESH_VARIABLES_LOADED=true
 # - 3: exit code, requested mandatory argument was not provided
 function esh_mandatory_arg () {
     if [[ $# -lt 1 ]]; then
-        echo "Missing argument #1: argument position"
+        esh_print_error "Missing argument ${ESH_BOLD_BRIGHT_WHITE}#1${ESH_CLEAR}: ${ESH_BOLD_BRIGHT_WHITE}argument position${ESH_CLEAR}"
         exit 1
     fi
 
     if [[ $# -lt 2 ]]; then
-        echo "Missing argument #2: error message"
+        esh_print_error "Missing argument ${ESH_BOLD_BRIGHT_WHITE}#2${ESH_CLEAR}: ${ESH_BOLD_BRIGHT_WHITE}error message${ESH_CLEAR}"
         exit 1
     fi
 
@@ -28,12 +30,12 @@ function esh_mandatory_arg () {
     shift 2
 
     if [[ ! "$_esh_m_argn" =~ ^[0-9]+$ ]]; then
-        echo "Argument position must be a number: $_esh_m_argn"
+        esh_print_error "${ESH_BOLD_BRIGHT_WHITE}Argument position${ESH_CLEAR} must be a number: ${ESH_BOLD_BRIGHT_WHITE}$_esh_m_argn${ESH_CLEAR}"
         exit 2
     fi
 
     if [[ $# -lt $_esh_m_argn ]]; then
-        echo "Missing argument #$_esh_m_argn: $_esh_m_error_message"
+        esh_print_error "Missing argument ${ESH_BOLD_BRIGHT_WHITE}#$_esh_m_argn${ESH_CLEAR}: ${ESH_BOLD_BRIGHT_WHITE}$_esh_m_error_message${ESH_CLEAR}"
         exit 3
     fi
 }
@@ -64,12 +66,12 @@ function esh_assign_mandatory_arg () {
     shift 3
 
     if [[ ! "$_esh_am_argn" =~ ^[0-9]+$ ]]; then
-        echo "Argument position must be a number: $_esh_am_argn"
+        esh_print_error "${ESH_BOLD_BRIGHT_WHITE}Argument position${ESH_CLEAR} must be a number: ${ESH_BOLD_BRIGHT_WHITE}$_esh_am_argn${ESH_CLEAR}"
         exit 2
     fi
 
     if [[ $# -lt $_esh_am_argn ]]; then
-        echo "Missing argument #$_esh_am_argn: $_esh_am_error_message"
+        esh_print_error "Missing argument ${ESH_BOLD_BRIGHT_WHITE}#$_esh_am_argn${ESH_CLEAR}: ${ESH_BOLD_BRIGHT_WHITE}$_esh_am_error_message${ESH_CLEAR}"
         exit 3
     fi
 
@@ -104,7 +106,7 @@ function esh_assign_optional_arg () {
     shift 3
 
     if [[ ! "$_esh_ao_argn" =~ ^[0-9]+$ ]]; then
-        echo "Argument position must be a number: $_esh_ao_argn"
+        esh_print_error "${ESH_BOLD_BRIGHT_WHITE}Argument position${ESH_CLEAR} must be a number: ${ESH_BOLD_BRIGHT_WHITE}$_esh_ao_argn${ESH_CLEAR}"
         exit 2
     fi
 
