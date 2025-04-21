@@ -187,3 +187,27 @@ function esh_replace_symlink() {
 
     esh_print_info "Linked ${ESH_BOLD_WHITE}$dest_file${ESH_CLEAR} -> ${ESH_BOLD_WHITE}$source_file${ESH_CLEAR}"
 }
+
+# esh_assert_symlink_exist() : assert that provided file exist and is a symbolic link
+#
+# $1 : path to symbolic link
+# Return code:
+# - 0: file is found and is a symbolic link
+# Exit code:
+# - 93: file was not found, or not a symbolic link
+function esh_assert_symlink_exist() {
+    local symlink_file=""
+    esh_assign_mandatory_arg 1 symlink_file "path to symbolic link" "$@"
+
+    if [ -h "$symlink_file" ]; then
+        return
+    fi
+
+    if ! [ -e "$symlink_file" ]; then
+        esh_print_error "Symbolic link does not exist: ${ESH_BOLD_BRIGHT_WHITE}$symlink_file${ESH_CLEAR}"
+        exit 93
+    else
+        esh_print_error "Not a symbolic link: ${ESH_BOLD_BRIGHT_WHITE}$symlink_file${ESH_CLEAR}"
+        exit 93
+    fi
+}

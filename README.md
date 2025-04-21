@@ -89,6 +89,12 @@ Essenshell is a shell library containing the most common and essential functions
         - **3**: unknown answer after prompt
         - **3**: exit code, mandatory positional argument was not provided
         - **4**: exit code, mandatory environment variable was not provided
+- `esh_assert_symlink_exist` : assert that provided file exist and is a symbolic link
+    - `$1` : path to symbolic link
+    - Return codes:
+        - **0**: file is found and is a symbolic link
+    - Exit codes:
+        - **93**: file was not found, or not a symbolic link
 
 ### print.sh
 - Included with `source "$ESSENSHELL_PATH/print.sh"`
