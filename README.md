@@ -45,6 +45,20 @@ Essenshell is a shell library containing the most common and essential functions
 - Included with `source "$ESSENSHELL_PATH/files.sh"`
 
 ### files.sh functions:
+- `esh_assert_file_exist <PATH>` : assert that file exist
+    - Does not resolve symbolic links, but asserts that something exist at the file path.
+    - `$1` : path to file
+    - Return code:
+        - **0**: file was found
+    - Exit code:
+        - **93**: file was not found
+- `esh_assert_file_not_exist <PATH>` : assert that file does not exist
+    - Does not resolve symbolic links, but asserts that nothing exist at the file path.
+    - `$1` : path to file
+    - Return code:
+        - **0**: file was not found
+    - Exit code:
+        - **93**: file was found
 - `esh_copy_file <SRC> [<DEST>]` : copy file or directory recursively from source file to destination file
     - `$SOURCE_DIR` : directory to create source file path from
     - `$DEST_DIR` : directory to create destination file path form

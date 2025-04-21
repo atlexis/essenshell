@@ -4,6 +4,44 @@ _ESH_FILES_LOADED=true
 source "$ESSENSHELL_PATH/print.sh"
 source "$ESSENSHELL_PATH/variables.sh"
 
+# esh_assert_file_exist() : assert that file exist
+#
+# Does not resolve symbolic links, but asserts that something exist at the file path.
+#
+# $1 : path to file
+# Return code:
+# - 0: file was found
+# Exit code:
+# - 93: file was not found
+function esh_assert_file_exist() {
+    local file=""
+    esh_assign_mandatory_arg 1 file "path to file" "$@"
+
+    if [[ ! -e "$file" && ! -L "$file" ]]; then
+        esh_print_error "File does not exist: ${ESH_BOLD_BRIGHT_WHITE}${file}${ESH_CLEAR}"
+        exit 93
+    fi
+}
+
+# esh_assert_file_not_exist() : assert that file does not exist
+#
+# Does not resolve symbolic links, but asserts that nothing exist at the file path.
+#
+# $1 : path to file
+# Return code:
+# - 0: file was not found
+# Exit code:
+# - 93: file was found
+function esh_assert_file_not_exist() {
+    local file=""
+    esh_assign_mandatory_arg 1 file "path to file" "$@"
+
+    if [[ -e "$file" || -L "$file" ]]; then
+        esh_print_error "File does already exist: ${ESH_BOLD_BRIGHT_WHITE}${file}${ESH_CLEAR}"
+        exit 93
+    fi
+}
+
 # esh_assert_regular_file_exist() : assert that provided file exist and is a regular file
 #
 # Will exit with an error code if the provided path is a symbolic link, not try to resolve it.
