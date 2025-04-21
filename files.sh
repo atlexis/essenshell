@@ -98,19 +98,10 @@ function esh_remove_symlink() {
     esh_mandatory_env DEST_DIR
     esh_mandatory_arg 1 "symbolic link to remove" "$@"
 
-    symlink_file="$DEST_DIR/$1"
+    local symlink_file="$DEST_DIR/$1"
+    esh_assert_symlink_exist "$symlink_file"
 
-    if ! [ -h "$symlink_file" ]; then
-        if ! [ -e "$symlink_file" ]; then
-            esh_print_error "Symbolic link to remove does not exist: ${ESH_BOLD_BRIGHT_WHITE}$symlink_file${ESH_CLEAR}"
-            return 2
-        else
-            esh_print_error "Symbolic link to remove is not a symbolic link: ${ESH_BOLD_BRIGHT_WHITE}$symlink_file${ESH_CLEAR}"
-            return 3
-        fi
-    fi
-
-    target_file="$(readlink "$symlink_file")"
+    local target_file="$(readlink "$symlink_file")"
 
     # do not care if symbolic link is broken and target file does not exist, remove anyway.
     rm "$symlink_file"
