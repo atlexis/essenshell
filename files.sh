@@ -106,9 +106,10 @@ function esh_assert_symlink_exist() {
 # Return codes:
 # - 0: successful copy
 # - 2: source file does not exist
-# - 3: destination file already exists
 # - 3: exit code, mandatory positional argument was not provided
 # - 4: exit code, mandatory environment variable was not defined
+# Exit code:
+# - 93: destination file does already exist
 function esh_copy_file () {
     esh_mandatory_env SOURCE_DIR
     esh_mandatory_env DEST_DIR
@@ -127,11 +128,7 @@ function esh_copy_file () {
     else
         dest_file="$DEST_DIR/$1"
     fi
-
-    if [[ -e "$dest_file" || -h "$dest_file" ]]; then
-        esh_print_error "Destination file already exist: ${ESH_BOLD_BRIGHT_WHITE}$dest_file${ESH_CLEAR}"
-        return 3
-    fi
+    esh_assert_file_not_exist "$dest_file"
 
     mkdir -p "$(dirname "$dest_file")"
     cp -r "$source_file" "$dest_file"
@@ -146,21 +143,18 @@ function esh_copy_file () {
 # Return codes:
 # - 0: successful symbolic link
 # - 1: mandatory environmental and positional variables are unspecified
-# - 2: source file does not exist
-# - 3: destination file already exists
 # - 3: exit code, mandatory positional argument was not provided
 # - 4: exit code, mandatory environment variable was not defined
+# Exit codes:
+# - 93: source file does not exist
+# - 93: destination file does already exist
 function esh_symlink_file () {
     esh_mandatory_env SOURCE_DIR
     esh_mandatory_env DEST_DIR
     esh_mandatory_arg 1 "path to source file" "$@"
 
     local source_file="$SOURCE_DIR/$1"
-
-    if ! [ -e "$source_file" ]; then
-        esh_print_error "Source file not found: ${ESH_BOLD_BRIGHT_WHITE}$source_file${ESH_CLEAR}"
-        return 2
-    fi
+    esh_assert_file_exist "$source_file"
 
     local dest_file=""
     if [ $# -ge 2 ]; then
@@ -168,11 +162,7 @@ function esh_symlink_file () {
     else
         dest_file="$DEST_DIR/$1"
     fi
-
-    if [ -e "$dest_file" ] || [ -h "$dest_file" ]; then
-        esh_print_error "Destination file already exist: ${ESH_BOLD_BRIGHT_WHITE}$dest_file${ESH_CLEAR}"
-        return 3
-    fi
+    esh_assert_file_not_exist "$dest_file"
 
     mkdir -p "$(dirname "$dest_file")"
     ln -s "$source_file" "$dest_file"
@@ -217,21 +207,18 @@ function esh_remove_symlink() {
 # Return codes:
 # - 0: successful symbolic link
 # - 1: mandatory environmental and positional variables are unspecified
-# - 2: source file does not exist
 # - 3: unknown answer after prompt
 # - 3: exit code, mandatory positional argument was not provided
 # - 4: exit code, mandatory environment variable was not defined
+# Exit codes:
+# - 93: source file does not exist
 function esh_replace_symlink() {
     esh_mandatory_env SOURCE_DIR
     esh_mandatory_env DEST_DIR
     esh_mandatory_arg 1 "path to source file" "$@"
 
     local source_file="$SOURCE_DIR/$1"
-
-    if ! [ -e "$source_file" ]; then
-        esh_print_error "Source file not found: ${ESH_BOLD_WHITE}$source_file${ESH_CLEAR}"
-        return 2
-    fi
+    esh_assert_file_exist "$source_file"
 
     local dest_file=""
     if [ $# -ge 2 ]; then
