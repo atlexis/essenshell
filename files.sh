@@ -27,6 +27,7 @@ function esh_copy_file () {
         return 2
     fi
 
+    local dest_file=""
     if [ $# -ge 2 ]; then
         dest_file="$DEST_DIR/$2"
     else
@@ -60,13 +61,14 @@ function esh_symlink_file () {
     esh_mandatory_env DEST_DIR
     esh_mandatory_arg 1 "path to source file" "$@"
 
-    source_file="$SOURCE_DIR/$1"
+    local source_file="$SOURCE_DIR/$1"
 
     if ! [ -e "$source_file" ]; then
         esh_print_error "Source file not found: ${ESH_BOLD_BRIGHT_WHITE}$source_file${ESH_CLEAR}"
         return 2
     fi
 
+    local dest_file=""
     if [ $# -ge 2 ]; then
         dest_file="$DEST_DIR/$2"
     else
@@ -130,13 +132,14 @@ function esh_replace_symlink() {
     esh_mandatory_env DEST_DIR
     esh_mandatory_arg 1 "path to source file" "$@"
 
-    source_file="$SOURCE_DIR/$1"
+    local source_file="$SOURCE_DIR/$1"
 
     if ! [ -e "$source_file" ]; then
         esh_print_error "Source file not found: ${ESH_BOLD_WHITE}$source_file${ESH_CLEAR}"
         return 2
     fi
 
+    local dest_file=""
     if [ $# -ge 2 ]; then
         dest_file="$DEST_DIR/$2"
     else
@@ -144,7 +147,7 @@ function esh_replace_symlink() {
     fi
 
     if [ -e "$dest_file" ] || [ -h "$dest_file" ]; then
-        original_source_file=$(readlink "$dest_file")
+        local original_source_file=$(readlink "$dest_file")
         if [[ "$original_source_file" == "$source_file" ]]; then
             esh_print_info "Wanted symbolic link already exist: ${ESH_BOLD_WHITE}$dest_file${ESH_CLEAR} -> ${ESH_BOLD_WHITE}$original_source_file${ESH_CLEAR}"
             return 0
