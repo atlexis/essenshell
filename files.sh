@@ -182,6 +182,38 @@ function esh_replace_symlink() {
     esh_print_info "Linked ${ESH_BOLD_WHITE}$dest_file${ESH_CLEAR} -> ${ESH_BOLD_WHITE}$source_file${ESH_CLEAR}"
 }
 
+# esh_assert_regular_file_exist() : assert that provided file exist and is a regular file
+#
+# Will exit with an error code if the provided path is a symbolic link, not try to resolve it.
+#
+# $1 : path to regular file
+# Return code:
+# - 0: file is found and is a regular file
+# Exit code:
+# - 93: file was not found, or not a regular file
+function esh_assert_regular_file_exist() {
+    local regular_file=""
+    esh_assign_mandatory_arg 1 regular_file "path to regular file" "$@"
+
+    # -f will try to resolve symbolic link, so check for this first
+    if [ -L "$regular_file" ]; then
+        esh_print_error "Not a regular file: ${ESH_BOLD_BRIGHT_WHITE}${regular_file}${ESH_CLEAR} (symbolic link)"
+        exit 93
+    fi
+
+    if [ -f "$regular_file" ]; then
+        return
+    fi
+
+    if [ -e "$regular_file" ]; then
+        esh_print_error "Not a regular file: ${ESH_BOLD_BRIGHT_WHITE}${regular_file}${ESH_CLEAR}"
+    else
+        esh_print_error "File does not exist: ${ESH_BOLD_BRIGHT_WHITE}${regular_file}${ESH_CLEAR}"
+    fi
+
+    exit 93
+}
+
 # esh_assert_symlink_exist() : assert that provided file exist and is a symbolic link
 #
 # $1 : path to symbolic link

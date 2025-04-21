@@ -95,6 +95,13 @@ Essenshell is a shell library containing the most common and essential functions
         - **0**: file is found and is a symbolic link
     - Exit codes:
         - **93**: file was not found, or not a symbolic link
+- `esh_assert_regular_file_exist` : assert that provided file exist and is a regular file
+    - Will exit with an error code if the provided path is a symbolic link, not try to resolve it.
+    - `$1` : path to regular file
+    - Return code:
+        - **0**: file is found and is a regular file
+    - Exit code:
+        - **93**: file was not found, or not a regular file
 
 ### print.sh
 - Included with `source "$ESSENSHELL_PATH/print.sh"`
