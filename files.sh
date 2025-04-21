@@ -50,7 +50,8 @@ function esh_assert_file_not_exist() {
 # Return code:
 # - 0: file is found and is a regular file
 # Exit code:
-# - 93: file was not found, or not a regular file
+# - 93: file was not found
+# - 93: file was not a regular file
 function esh_assert_regular_file_exist() {
     local regular_file=""
     esh_assign_mandatory_arg 1 regular_file "path to regular file" "$@"
@@ -80,7 +81,8 @@ function esh_assert_regular_file_exist() {
 # Return code:
 # - 0: file is found and is a symbolic link
 # Exit code:
-# - 93: file was not found, or not a symbolic link
+# - 93: file was not found
+# - 93: file was not a symbolic link
 function esh_assert_symlink_exist() {
     local symlink_file=""
     esh_assign_mandatory_arg 1 symlink_file "path to symbolic link" "$@"
@@ -106,9 +108,9 @@ function esh_assert_symlink_exist() {
 # Return codes:
 # - 0: successful copy
 # - 2: source file does not exist
-# - 3: exit code, mandatory positional argument was not provided
-# - 4: exit code, mandatory environment variable was not defined
 # Exit code:
+# - 3: mandatory positional argument was not provided
+# - 4: exit code, mandatory environment variable was not defined
 # - 93: destination file does already exist
 function esh_copy_file () {
     esh_mandatory_env SOURCE_DIR
@@ -142,10 +144,9 @@ function esh_copy_file () {
 # $2 (optional) : path to destination file, relative from $DEST_DIR, will be same as $1 if omitted
 # Return codes:
 # - 0: successful symbolic link
-# - 1: mandatory environmental and positional variables are unspecified
-# - 3: exit code, mandatory positional argument was not provided
-# - 4: exit code, mandatory environment variable was not defined
 # Exit codes:
+# - 3: mandatory positional argument was not provided
+# - 4: mandatory environment variable was not defined
 # - 93: source file does not exist
 # - 93: destination file does already exist
 function esh_symlink_file () {
@@ -175,11 +176,11 @@ function esh_symlink_file () {
 # $1 : path to symbolic link file, relative from $DEST_DIR
 # Return codes:
 # - 0: successful removal of symbolic link
-# - 1: mandatory environmental and positional variables are unspecified
-# - 2: symbolic link to remove does not exist
-# - 3: symbolic link to remove is not a symbolic link
-# - 3: exit code, mandatory positional argument was not provided
-# - 4: exit code, mandatory environment variable was not defined
+# Exit codes:
+# - 3: mandatory positional argument was not provided
+# - 4: mandatory environment variable was not defined
+# - 93: file was not found
+# - 93: file was not a symbolic link
 function esh_remove_symlink() {
     esh_mandatory_env DEST_DIR
     esh_mandatory_arg 1 "symbolic link to remove" "$@"
@@ -206,11 +207,10 @@ function esh_remove_symlink() {
 # $2 (optional) : path to destination file, relative from $DEST_DIR, will be same as $1 if omitted
 # Return codes:
 # - 0: successful symbolic link
-# - 1: mandatory environmental and positional variables are unspecified
 # - 3: unknown answer after prompt
-# - 3: exit code, mandatory positional argument was not provided
-# - 4: exit code, mandatory environment variable was not defined
 # Exit codes:
+# - 3: mandatory positional argument was not provided
+# - 4: mandatory environment variable was not defined
 # - 93: source file does not exist
 function esh_replace_symlink() {
     esh_mandatory_env SOURCE_DIR
