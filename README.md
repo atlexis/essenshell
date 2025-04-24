@@ -42,11 +42,12 @@ Essenshell is a shell library containing the most common and essential functions
     - [files.sh](#filessh)
     - [functions.sh](#functionssh)
     - [print.sh](#printsh)
+    - [variables.sh](#variables.sh)
 
 ### files.sh
 - Included with `source "$ESSENSHELL_PATH/files.sh"`
 
-### files.sh functions:
+#### files.sh functions
 - `esh_assert_file_exist <PATH>` : assert that file exist
     - Does not resolve symbolic links, but asserts that something exist at the file path.
     - `$1` (`<PATH>`): path to file
@@ -208,7 +209,7 @@ Essenshell is a shell library containing the most common and essential functions
         - **2**: exit code, provided argument position was not a number
         - **3**: exit code, requested mandatory argument was not provided
 - `esh_assign_optional_arg <ARGN> <VAR> <DEFAULT> [<ARG>...]` : assign either positional argument or default value to provided variable
-    - # Do not assign to a variable name prefixed with `_esh`. Those names are reserved for internal use by essenshell and might result in errors due to variable scope clashes.
+    - Do not assign to a variable name prefixed with `_esh`. Those names are reserved for internal use by essenshell and might result in errors due to variable scope clashes.
     - `$1` (`<ARGN>`) : **number**, the position of the optional argument
     - `$2` (`<VAR>`) : **variable**, name of the variable to assign resulting value to, see restrictions above
     - `$3` (`<DEFAULT>`) : default value to assign to variable
