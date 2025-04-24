@@ -18,6 +18,7 @@ Essenshell is a shell library containing the most common and essential functions
 - Complete library: [`essenshell.sh`](#global)
 - Sub-libraries:
     - [`files.sh`](#filessh) - file-related functions
+    - [`functions.sh`](#functionssh) - function-related functions
     - [`print.sh`](#printsh) - print-related functions
     - [`variables.sh`](#variablessh) - variable-related functions
 - **Note**: Sourced variables and functions beginning with an underscore are private variables and are only intended for internal use, do not rely on these directly since their APIs are not stable and might change at any time.
@@ -39,6 +40,7 @@ Essenshell is a shell library containing the most common and essential functions
 - `esh_version` - print version of essenshell
 - Includes:
     - [files.sh](#filessh)
+    - [functions.sh](#functionssh)
     - [print.sh](#printsh)
 
 ### files.sh
@@ -122,6 +124,15 @@ Essenshell is a shell library containing the most common and essential functions
         - **3**: mandatory positional argument was not provided
         - **4**: mandatory environment variable was not provided
         - **93**: source file does not exist
+
+### functions.sh
+- Included with `source "$ESSENSHELL_PATH/functions.sh"`
+- `esh_assert_function_exist <NAME>` : assert that function exist
+    - `$1` : function name
+    - Return code:
+        - **0**: function was found
+    - Exit code:
+        - **93**: function was not found
 
 ### print.sh
 - Included with `source "$ESSENSHELL_PATH/print.sh"`
