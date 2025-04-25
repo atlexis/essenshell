@@ -224,6 +224,13 @@ Essenshell is a shell library containing the most common and essential functions
         - **0**: environment variable is set
         - **1**: exit code, mandatory positional variables are unspecified
         - **4**: exit code, mandatory environment variable is undefined
+- `esh_args_divisible_by <DIVISOR> [<ARG>...]` : assert that number of arguments are evenly dividable by the divisor
+    - `$1` : number, divisor to be evenly dividable by
+    - `$2+` : optional, list of arguments to check, commonly called with: `"$@"`
+    - Return codes:
+        - **0**: number of arguments are evenly dividable by the divisor
+    - Exit codes:
+        - **93**: number of argument are not evenly dividable by the divisor
 
 ## Test
 - Dependencies: `docker`

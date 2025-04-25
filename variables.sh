@@ -135,3 +135,23 @@ function esh_mandatory_env () {
         exit 4
     fi
 }
+
+# esh_args_divisible_by() : assert that number of arguments are evenly dividable by the divisor
+#
+# $1 : number, divisor to be evenly dividable by
+# $2+ : optional, list of arguments to check, commonly called with: "$@"
+#
+# Return codes:
+# - 0: number of arguments are evenly dividable by the divisor
+# Exit codes:
+# - 93: number of argument are not evenly dividable by the divisor
+function esh_args_divisible_by () {
+    local divisor=""
+    esh_assign_mandatory_arg 1 divisor "divisor for number of arguments" "$@"
+    shift
+
+    if (( $# % $divisor != 0 )); then
+        esh_print_error "Number of elements is not divisible by $divisor: ${ESH_BOLD_BRIGHT_WHITE}$#${ESH_CLEAR}"
+        exit 93
+    fi
+}
