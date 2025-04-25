@@ -134,6 +134,34 @@ Essenshell is a shell library containing the most common and essential functions
         - **0**: function was found
     - Exit code:
         - **93**: function was not found
+- `esh_execution_for_each_n_args <FUNC_NAME> <NUM_ARGS> [<ARG>...]` : execute function with every chunk of provided number of arguments
+    - `$1` : string, name of function to execute
+    - `$2` : number, number of arguments to use for each invokation
+    - `$3+` : optional, list of arguments to provide to function invokations
+    - Return codes:
+        - **0**: if all executions were successful
+    - Exit codes:
+        - **93**: function with provided name was not found
+        - **93**: number of arguments were not evenly divisible by provided number
+- `esh_execution_for_each_arg <FUNC_NAME> [<ARG>...]` : execute function with every provided argument
+    - `$1` : string, name of function to execute
+    - `$2+` : optional, list of arguments to provide to function invokations
+    - Return codes:
+        - **0**: if all executions were successful
+    - Exit codes:
+        - **93**: function with provided name was not found
+- `esh_execution_for_each_two_args <FUNC_NAME> [<ARG>...]` : execute function chunk of every two provided arguments
+    - variant with three arguments: `esh_execution_for_each_three_args`
+    - variant with four arguments: `esh_execution_for_each_four_args`
+    - variant with five arguments: `esh_execution_for_each_five_args`
+    - variant with six arguments: `esh_execution_for_each_six_args`
+    - `$1` : string, name of function to execute
+    - `$2+` : optional, list of arguments to provide to function invokations
+    - Return codes:
+        - **0**: if all executions were successful
+    - Exit codes:
+        - **93**: function with provided name was not found
+        - **93**: number of arguments were not evenly divisible by provided number
 
 ### print.sh
 - Included with `source "$ESSENSHELL_PATH/print.sh"`
