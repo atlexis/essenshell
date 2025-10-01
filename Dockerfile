@@ -12,6 +12,7 @@ USER essenuser
 WORKDIR /home/essenuser
 COPY . .
 ENV BATS_LIB_PATH=/usr/local/lib/node_modules
+ENV ESSENSHELL_PATH=/home/essenuser
 
 # Expose test results
 EXPOSE 8000
