@@ -7,7 +7,7 @@ function setup {
 }
 
 @test "correct version variable" {
-    assert [ $ESH_VERSION = 0.1.0 ]
+    assert [ $ESSENSHELL_VERSION = 0.1.0 ]
 }
 
 @test "correct version function" {
