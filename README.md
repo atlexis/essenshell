@@ -262,7 +262,12 @@ Essenshell is a shell library containing the most common and essential functions
 
 ## Test
 - Dependencies: `docker`
-- `test/ut.sh` - run unit tests in `docker` container
-- `test/cov.sh` - run coverage test in `docker` container
-- `test/manual.sh` - run tests with output for manual verification
+- `docker build -t essenshell .` - build Docker image, only once
+- `docker run -v $(pwd):/app:ro essenshell bats test` - run unit tests in Docker container
+- `docker run -v $(pwd):/app essenshell bashcov -- bats test` - run unit test and code coverage in Docker container
+    - open `coverage/index.html` in browser to see results
+- Convenience scripts:
+    - `test/ut.sh` - run unit tests in `docker` container
+    - `test/cov.sh` - run coverage test in `docker` container
+    - `test/manual.sh` - run tests with output for manual verification
 - `.simplecov` - configuration for coverage test

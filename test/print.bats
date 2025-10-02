@@ -1,12 +1,17 @@
 clear="\033[0m"
-black="\033[30;m"
-red="\033[31;m"
-green="\033[32;m"
-yellow="\033[33;m"
-blue="\033[34;m"
-magenta="\033[35;m"
-cyan="\033[36;m"
-white="\033[37;m"
+black="\033[30m"
+red="\033[31m"
+green="\033[32m"
+yellow="\033[33m"
+blue="\033[34m"
+magenta="\033[35m"
+cyan="\033[36m"
+white="\033[37m"
+
+bold_bright_red="\033[1;91m"
+bold_bright_green="\033[1;92m"
+bold_bright_yellow="\033[1;93m"
+bold_bright_magenta="\033[1;95m"
 
 function setup {
     bats_load_library bats-support
@@ -62,19 +67,19 @@ function assert_print {
 }
 
 function assert_info_print {
-    assert_print "$green" "INFO" "$@"
+    assert_print "$bold_bright_green" "INFO" "$@"
 }
 
 function assert_warning_print {
-    assert_print "$yellow" "WARNING" "$@"
+    assert_print "$bold_bright_yellow" "WARNING" "$@"
 }
 
 function assert_error_print {
-    assert_print "$red" "ERROR" "$@"
+    assert_print "$bold_bright_red" "ERROR" "$@"
 }
 
 function assert_debug_print {
-    assert_print "$magenta" "DEBUG" "$@"
+    assert_print "$bold_bright_magenta" "DEBUG" "$@"
 }
 
 function assert_no_output {
@@ -210,7 +215,7 @@ function assert_no_output {
 
 @test "info print with app name in black color" {
     esh_set_app_name "FOOBAR"
-    esh_set_app_color $ESH_COLOR_BLACK
+    esh_set_app_color $ESH_BLACK
 
     run esh_print_info "foo bar baz"
 
@@ -219,7 +224,7 @@ function assert_no_output {
 
 @test "warning print with app name in black color" {
     esh_set_app_name "FOOBAR"
-    esh_set_app_color $ESH_COLOR_BLACK
+    esh_set_app_color $ESH_BLACK
 
     run esh_print_warning "foo bar baz"
 
@@ -228,7 +233,7 @@ function assert_no_output {
 
 @test "error print with app name in black color" {
     esh_set_app_name "FOOBAR"
-    esh_set_app_color $ESH_COLOR_BLACK
+    esh_set_app_color $ESH_BLACK
 
     run esh_print_error "foo bar baz"
 
@@ -238,7 +243,7 @@ function assert_no_output {
 @test "enabled debug print with app name in black color" {
     ESH_DEBUG=true
     esh_set_app_name "FOOBAR"
-    esh_set_app_color $ESH_COLOR_BLACK
+    esh_set_app_color $ESH_BLACK
 
     run esh_print_debug "foo bar baz"
 
@@ -248,7 +253,7 @@ function assert_no_output {
 @test "disabled debug print with app name in black color" {
     ESH_DEBUG=false
     esh_set_app_name "FOOBAR"
-    esh_set_app_color $ESH_COLOR_BLACK
+    esh_set_app_color $ESH_BLACK
 
     run esh_print_debug "foo bar baz"
 
@@ -257,7 +262,7 @@ function assert_no_output {
 
 @test "set app name in red color" {
     esh_set_app_name "FOOBAR"
-    esh_set_app_color $ESH_COLOR_RED
+    esh_set_app_color $ESH_RED
 
     run esh_print_info "foo bar baz"
 
@@ -266,7 +271,7 @@ function assert_no_output {
 
 @test "set app name in green color" {
     esh_set_app_name "FOOBAR"
-    esh_set_app_color $ESH_COLOR_GREEN
+    esh_set_app_color $ESH_GREEN
 
     run esh_print_info "foo bar baz"
 
@@ -275,7 +280,7 @@ function assert_no_output {
 
 @test "set app name in yellow color" {
     esh_set_app_name "FOOBAR"
-    esh_set_app_color $ESH_COLOR_YELLOW
+    esh_set_app_color $ESH_YELLOW
 
     run esh_print_info "foo bar baz"
 
@@ -284,7 +289,7 @@ function assert_no_output {
 
 @test "set app name in blue color" {
     esh_set_app_name "FOOBAR"
-    esh_set_app_color $ESH_COLOR_BLUE
+    esh_set_app_color $ESH_BLUE
 
     run esh_print_info "foo bar baz"
 
@@ -293,7 +298,7 @@ function assert_no_output {
 
 @test "set app name in magenta color" {
     esh_set_app_name "FOOBAR"
-    esh_set_app_color $ESH_COLOR_MAGENTA
+    esh_set_app_color $ESH_MAGENTA
 
     run esh_print_info "foo bar baz"
 
@@ -302,7 +307,7 @@ function assert_no_output {
 
 @test "set app name in cyan color" {
     esh_set_app_name "FOOBAR"
-    esh_set_app_color $ESH_COLOR_CYAN
+    esh_set_app_color $ESH_CYAN
 
     run esh_print_info "foo bar baz"
 
@@ -311,7 +316,7 @@ function assert_no_output {
 
 @test "set app name in white color" {
     esh_set_app_name "FOOBAR"
-    esh_set_app_color $ESH_COLOR_WHITE
+    esh_set_app_color $ESH_WHITE
 
     run esh_print_info "foo bar baz"
 
@@ -328,7 +333,7 @@ function assert_no_output {
 }
 
 @test "set app color without app name" {
-    esh_set_app_color "$ESH_COLOR_CYAN"
+    esh_set_app_color "$ESH_CYAN"
 
     run esh_print_info "foo bar baz"
 

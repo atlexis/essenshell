@@ -1,4 +1,4 @@
-[[ -n "${_ESH_FUNCTIONS_LOADED}" ]] && return
+[[ -n "${_ESH_FUNCTIONS_LOADED-}" ]] && return
 _ESH_FUNCTIONS_LOADED=true
 
 source "$ESSENSHELL_PATH/print.sh"

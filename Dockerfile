@@ -7,12 +7,7 @@ RUN npm install -g https://github.com/ztombol/bats-support
 RUN npm install -g https://github.com/ztombol/bats-assert
 
 # Setup test environment
-RUN adduser -D essenuser
-USER essenuser
-WORKDIR /home/essenuser
-COPY . .
+WORKDIR /app
 ENV BATS_LIB_PATH=/usr/local/lib/node_modules
-ENV ESSENSHELL_PATH=/home/essenuser
-
-# Expose test results
-EXPOSE 8000
+ENV ESSENSHELL_PATH=/app
+VOLUME ["/app"]

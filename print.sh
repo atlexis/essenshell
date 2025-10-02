@@ -1,4 +1,4 @@
-[[ -n "${_ESH_PRINT_LOADED}" ]] && return
+[[ -n "${_ESH_PRINT_LOADED-}" ]] && return
 _ESH_PRINT_LOADED=true
 
 ESH_CLEAR="\033[0m"
