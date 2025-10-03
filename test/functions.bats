@@ -53,18 +53,71 @@ function foo_bar_baz {
 }
 
 function_call_count=0
-function assert_two_arguments {
+
+function assert_one_argument {
     ((function_call_count+=1))
     assert_equal "$1" "foo"
+}
+
+function assert_two_arguments {
+    assert_one_argument "$1"
     assert_equal "$2" "bar"
 }
 
-@test "execute for each two arguments" {
+function assert_three_arguments {
+    assert_two_arguments "$1" "$2"
+    assert_equal "$3" "baz"
+}
+
+function assert_four_arguments {
+    assert_three_arguments "$1" "$2" "$3"
+    assert_equal "$4" "qux"
+}
+function assert_five_arguments {
+    assert_four_arguments "$1" "$2" "$3" "$4"
+    assert_equal "$5" "quux"
+}
+function assert_six_arguments {
+    assert_five_arguments "$1" "$2" "$3" "$4" "$5"
+    assert_equal "$6" "quuz"
+}
+
+@test "execute for each N arguments" {
     esh_execute_for_each_n_args assert_two_arguments 2 "foo" "bar" "foo" "bar"
     assert_equal "$function_call_count" 2
 }
 
-@test "execute for each two arguments with no arguments" {
+@test "execute for each N arguments with no arguments" {
     esh_execute_for_each_n_args assert_two_arguments 2
     assert_equal "$function_call_count" 0
+}
+
+@test "execute for each argument" {
+    esh_execute_for_each_arg assert_one_argument "foo" "foo" "foo"
+    assert_equal "$function_call_count" 3
+}
+
+@test "execute for each two arguments" {
+    esh_execute_for_each_two_args assert_two_arguments "foo" "bar" "foo" "bar" "foo" "bar"
+    assert_equal "$function_call_count" 3
+}
+
+@test "execute for each three arguments" {
+    esh_execute_for_each_three_args assert_three_arguments "foo" "bar" "baz" "foo" "bar" "baz" "foo" "bar" "baz"
+    assert_equal "$function_call_count" 3
+}
+
+@test "execute for each four arguments" {
+    esh_execute_for_each_four_args assert_four_arguments "foo" "bar" "baz" "qux" "foo" "bar" "baz" "qux" "foo" "bar" "baz" "qux"
+    assert_equal "$function_call_count" 3
+}
+
+@test "execute for each five arguments" {
+    esh_execute_for_each_five_args assert_five_arguments "foo" "bar" "baz" "qux" "quux" "foo" "bar" "baz" "qux" "quux" "foo" "bar" "baz" "qux" "quux"
+    assert_equal "$function_call_count" 3
+}
+
+@test "execute for each six arguments" {
+    esh_execute_for_each_six_args assert_six_arguments "foo" "bar" "baz" "qux" "quux" "quuz" "foo" "bar" "baz" "qux" "quux" "quuz" "foo" "bar" "baz" "qux" "quux" "quuz"
+    assert_equal "$function_call_count" 3
 }
