@@ -91,43 +91,42 @@ function esh_set_app_color {
     local color=$1
 
     case "$color" in
-        "$ESH_BLACK"|\
-        "$ESH_RED"|\
-        "$ESH_GREEN"|\
-        "$ESH_YELLOW"|\
-        "$ESH_BLUE"|\
-        "$ESH_MAGENTA"|\
-        "$ESH_CYAN"|\
-        "$ESH_WHITE"|\
-        "$ESH_BRIGHT_BLACK"|\
-        "$ESH_BRIGHT_RED"|\
-        "$ESH_BRIGHT_GREEN"|\
-        "$ESH_BRIGHT_YELLOW"|\
-        "$ESH_BRIGHT_BLUE"|\
-        "$ESH_BRIGHT_MAGENTA"|\
-        "$ESH_BRIGHT_CYAN"|\
-        "$ESH_BRIGHT_WHITE"|\
-        "$ESH_BOLD_BLACK"|\
-        "$ESH_BOLD_RED"|\
-        "$ESH_BOLD_GREEN"|\
-        "$ESH_BOLD_YELLOW"|\
-        "$ESH_BOLD_BLUE"|\
-        "$ESH_BOLD_MAGENTA"|\
-        "$ESH_BOLD_CYAN"|\
-        "$ESH_BOLD_WHITE"|\
-        "$ESH_BOLD_BRIGHT_BLACK"|\
-        "$ESH_BOLD_BRIGHT_RED"|\
-        "$ESH_BOLD_BRIGHT_GREEN"|\
-        "$ESH_BOLD_BRIGHT_YELLOW"|\
-        "$ESH_BOLD_BRIGHT_BLUE"|\
-        "$ESH_BOLD_BRIGHT_MAGENTA"|\
-        "$ESH_BOLD_BRIGHT_CYAN"|\
-        "$ESH_BOLD_BRIGHT_WHITE")
-            ;;
+        "$ESH_BLACK") : ;;
+        "$ESH_RED") : ;;
+        "$ESH_BLUE") : ;;
+        "$ESH_GREEN") : ;;
+        "$ESH_YELLOW") : ;;
+        "$ESH_BLUE") : ;;
+        "$ESH_MAGENTA") : ;;
+        "$ESH_CYAN") : ;;
+        "$ESH_WHITE") : ;;
+        "$ESH_BRIGHT_BLACK") : ;;
+        "$ESH_BRIGHT_RED") : ;;
+        "$ESH_BRIGHT_GREEN") : ;;
+        "$ESH_BRIGHT_YELLOW") : ;;
+        "$ESH_BRIGHT_BLUE") : ;;
+        "$ESH_BRIGHT_MAGENTA") : ;;
+        "$ESH_BRIGHT_CYAN") : ;;
+        "$ESH_BRIGHT_WHITE") : ;;
+        "$ESH_BOLD_BLACK") : ;;
+        "$ESH_BOLD_RED") : ;;
+        "$ESH_BOLD_GREEN") : ;;
+        "$ESH_BOLD_YELLOW") : ;;
+        "$ESH_BOLD_BLUE") : ;;
+        "$ESH_BOLD_MAGENTA") : ;;
+        "$ESH_BOLD_CYAN") : ;;
+        "$ESH_BOLD_WHITE") : ;;
+        "$ESH_BOLD_BRIGHT_BLACK") : ;;
+        "$ESH_BOLD_BRIGHT_RED") : ;;
+        "$ESH_BOLD_BRIGHT_GREEN") : ;;
+        "$ESH_BOLD_BRIGHT_YELLOW") : ;;
+        "$ESH_BOLD_BRIGHT_BLUE") : ;;
+        "$ESH_BOLD_BRIGHT_MAGENTA") : ;;
+        "$ESH_BOLD_BRIGHT_CYAN") : ;;
+        "$ESH_BOLD_BRIGHT_WHITE") : ;;
         *)
-            return
             esh_print_error "Trying to set an invalid app color."
-            ;;
+            return ;;
     esac
 
     _ESH_APP_COLOR="$color"
