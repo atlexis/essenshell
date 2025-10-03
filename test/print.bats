@@ -8,6 +8,15 @@ magenta="\033[35m"
 cyan="\033[36m"
 white="\033[37m"
 
+bright_black="\033[90m"
+bright_red="\033[91m"
+bright_green="\033[92m"
+bright_yellow="\033[93m"
+bright_blue="\033[94m"
+bright_magenta="\033[95m"
+bright_cyan="\033[96m"
+bright_white="\033[97m"
+
 bold_bright_red="\033[1;91m"
 bold_bright_green="\033[1;92m"
 bold_bright_yellow="\033[1;93m"
@@ -321,6 +330,79 @@ function assert_no_output {
     run esh_print_info "foo bar baz"
 
     assert_info_print "$white" "FOOBAR" "foo bar baz"
+}
+
+@test "set app name in bright black color" {
+
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_BRIGHT_BLACK
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$bright_black" "FOOBAR" "foo bar baz"
+}
+
+@test "set app name in bright red color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_BRIGHT_RED
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$bright_red" "FOOBAR" "foo bar baz"
+}
+
+@test "set app name in bright green color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_BRIGHT_GREEN
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$bright_green" "FOOBAR" "foo bar baz"
+}
+
+@test "set app name in bright yellow color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_BRIGHT_YELLOW
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$bright_yellow" "FOOBAR" "foo bar baz"
+}
+
+@test "set app name in bright blue color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_BRIGHT_BLUE
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$bright_blue" "FOOBAR" "foo bar baz"
+}
+
+@test "set app name in bright magenta color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_BRIGHT_MAGENTA
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$bright_magenta" "FOOBAR" "foo bar baz"
+}
+
+@test "set app name in bright cyan color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_BRIGHT_CYAN
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$bright_cyan" "FOOBAR" "foo bar baz"
+}
+
+@test "set app name in bright white color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_BRIGHT_WHITE
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$bright_white" "FOOBAR" "foo bar baz"
 }
 
 @test "set app name in invalid color" {
