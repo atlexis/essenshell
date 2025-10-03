@@ -31,6 +31,9 @@ Essenshell is a shell library containing the most common and essential functions
     - fallback and try default path if not, `$HOME/.local/lib/essenshell`
     - verify that `$ESSENSHELL_PATH/essenshell.sh` is available
     - source `$ESSENSHELL_PATH/essenshell.sh` into script
+- `templates/simple_essenshell_path`
+    - verify that `$ESSENSHELL_PATH/essenshell.sh` exist
+    - source `$ESSENSHELL_PATH/essenshell.sh` into script
 
 ### Global
 - Included with `source essenshell.sh`
