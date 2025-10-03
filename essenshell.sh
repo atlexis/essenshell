@@ -1,4 +1,4 @@
-if [ -z "$ESSENSHELL_PATH" ]; then
+if [[ -z "${ESSENSHELL_PATH-}" ]]; then
     echo "Environment variable ESSENSHELL_PATH not set."
     exit 1
 fi
