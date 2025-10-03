@@ -39,8 +39,7 @@ function setup {
     bats_load_library bats-support
     bats_load_library bats-assert
 
-    local dir=$(dirname "$BATS_TEST_FILENAME")
-    source ${dir}/../essenshell.sh
+    source "$ESSENSHELL_PATH/essenshell.sh"
 }
 
 function assert_prompt_print {
