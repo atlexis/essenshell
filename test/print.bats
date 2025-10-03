@@ -26,10 +26,14 @@ bold_magenta="\033[1;35m"
 bold_cyan="\033[1;36m"
 bold_white="\033[1;37m"
 
+bold_bright_black="\033[1;90m"
 bold_bright_red="\033[1;91m"
 bold_bright_green="\033[1;92m"
 bold_bright_yellow="\033[1;93m"
+bold_bright_blue="\033[1;94m"
 bold_bright_magenta="\033[1;95m"
+bold_bright_cyan="\033[1;96m"
+bold_bright_white="\033[1;97m"
 
 function setup {
     bats_load_library bats-support
@@ -485,6 +489,79 @@ function assert_no_output {
     run esh_print_info "foo bar baz"
 
     assert_info_print "$bold_white" "FOOBAR" "foo bar baz"
+}
+
+@test "set app name in bold bright black color" {
+
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_BOLD_BRIGHT_BLACK
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$bold_bright_black" "FOOBAR" "foo bar baz"
+}
+
+@test "set app name in bold bright red color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_BOLD_BRIGHT_RED
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$bold_bright_red" "FOOBAR" "foo bar baz"
+}
+
+@test "set app name in bold bright green color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_BOLD_BRIGHT_GREEN
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$bold_bright_green" "FOOBAR" "foo bar baz"
+}
+
+@test "set app name in bold bright yellow color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_BOLD_BRIGHT_YELLOW
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$bold_bright_yellow" "FOOBAR" "foo bar baz"
+}
+
+@test "set app name in bold bright blue color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_BOLD_BRIGHT_BLUE
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$bold_bright_blue" "FOOBAR" "foo bar baz"
+}
+
+@test "set app name in bold bright magenta color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_BOLD_BRIGHT_MAGENTA
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$bold_bright_magenta" "FOOBAR" "foo bar baz"
+}
+
+@test "set app name in bold bright cyan color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_BOLD_BRIGHT_CYAN
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$bold_bright_cyan" "FOOBAR" "foo bar baz"
+}
+
+@test "set app name in bold bright white color" {
+    esh_set_app_name "FOOBAR"
+    esh_set_app_color $ESH_BOLD_BRIGHT_WHITE
+
+    run esh_print_info "foo bar baz"
+
+    assert_info_print "$bold_bright_white" "FOOBAR" "foo bar baz"
 }
 
 @test "set app name in invalid color" {
