@@ -125,7 +125,8 @@ Essenshell is a shell library containing the most common and essential functions
     - `$2` (`<DEST>`) : **optional**, path to destination file, relative from `$DEST_DIR`, will be same as $1 if omitted
     - Return codes:
         - **0**: successful symbolic link
-        - **3**: unknown answer after prompt
+        - **1**: user declined removing symbolic link
+        - **2**: unknown answer after prompt
     - Exit codes:
         - **3**: mandatory positional argument was not provided
         - **4**: mandatory environment variable was not provided

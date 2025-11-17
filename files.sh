@@ -3,6 +3,7 @@ _ESH_FILES_LOADED=true
 
 source "$ESSENSHELL_PATH/print.sh"
 source "$ESSENSHELL_PATH/variables.sh"
+source "$ESSENSHELL_PATH/input.sh"
 
 # esh_assert_file_exist() : assert that file exist
 #
@@ -196,6 +197,14 @@ function esh_remove_symlink() {
     esh_print_info "Unlinking ${ESH_BOLD_BRIGHT_WHITE}$symlink_file${ESH_CLEAR} -x-> ${ESH_BOLD_BRIGHT_WHITE}$target_file${ESH_CLEAR}"
 }
 
+function _esh_remove_old_symlink() {
+    esh_assign_mandatory_arg 1 dest_file "" "$@"
+    esh_assign_mandatory_arg 2 original_source_file "" "$@"
+
+    esh_print_info "Removing old symbolic link: ${ESH_BOLD_WHITE}${dest_file}${ESH_CLEAR} -x-> ${ESH_BOLD_WHITE}${original_source_file}${ESH_CLEAR}"
+    rm "$dest_file"
+}
+
 # esh_replace_symlink() : create or replace symbolic link from destination file to source file.
 #
 # Ask for confirmation before removing an existing symbolic link.
@@ -207,7 +216,8 @@ function esh_remove_symlink() {
 # $2 (optional) : path to destination file, relative from $DEST_DIR, will be same as $1 if omitted
 # Return codes:
 # - 0: successful symbolic link
-# - 3: unknown answer after prompt
+# - 1: user declined removing symbolic link
+# - 2: unknown answer after prompt
 # Exit codes:
 # - 3: mandatory positional argument was not provided
 # - 4: mandatory environment variable was not defined
@@ -235,26 +245,11 @@ function esh_replace_symlink() {
         fi
 
         esh_print_info "A different symbolic link already exist: ${ESH_BOLD_WHITE}$dest_file${ESH_CLEAR} -> ${ESH_BOLD_WHITE}$original_source_file${ESH_CLEAR}"
-        read -p "Do you want to replace it? y/N: " key
+        esh_confirm_before_action "Do you want to replace it?" "Keeping old symbolic link: ${ESH_BOLD_WHITE}$dest_file${ESH_CLEAR} -> ${ESH_BOLD_WHITE}$original_source_file${ESH_CLEAR}" _esh_remove_old_symlink "$dest_file" "$original_source_file"
 
-        if [[ -z "$key" ]]; then
-            key="n"
+        if [[ "$?" != 0 ]]; then
+            return "$?"
         fi
-
-        case "$key" in
-            n|N|q|Q|no|No|NO|quit|Quit|QUIT)
-                esh_print_info "Keeping old symbolic link: ${ESH_BOLD_WHITE}$dest_file${ESH_CLEAR} -> ${ESH_BOLD_WHITE}$original_source_file${ESH_CLEAR}"
-                return 0
-                ;;
-            y|Y|yes|Yes|YES)
-                esh_print_info "Removing old symbolic link: ${ESH_BOLD_WHITE}$dest_file${ESH_CLEAR} -x-> ${ESH_BOLD_WHITE}$original_source_file${ESH_CLEAR}"
-                rm "$dest_file"
-                ;;
-            *)
-                esh_print_error "Unknown input: ${ESH_BOLD_WHITE}'$key'${ESH_CLEAR}"
-                return 3
-                ;;
-        esac
     fi
 
     mkdir -p "$(dirname "$dest_file")"
