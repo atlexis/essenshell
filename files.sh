@@ -76,6 +76,40 @@ function esh_assert_regular_file_exist() {
     exit 93
 }
 
+# esh_assert_directory_exist() : assert that provided file exist and is a directory
+#
+# Will exit with an error code if the provided path is a symbolic link, not try to resolve it.
+#
+# $1 : path to directory
+# Return code:
+# - 0: file is found and is a directory
+# Exit code:
+# - 93: file was not found
+# - 93: file was not a directory
+function esh_assert_directory_exist() {
+    local directory_file=""
+    esh_assign_mandatory_arg 1 directory_file "path to directory" "$@"
+
+    # -f will try to resolve symbolic link, so check for this first
+    if [ -L "$directory_file" ]; then
+        esh_print_error "Not a directory: ${ESH_BOLD_BRIGHT_WHITE}${directory_file}${ESH_CLEAR} (symbolic link)"
+        exit 93
+    fi
+
+    if [ -d "$directory_file" ]; then
+        esh_print_debug "$directory_file exists and is a directory"
+        return
+    fi
+
+    if [ -e "$directory_file" ]; then
+        esh_print_error "Not a directory: ${ESH_BOLD_BRIGHT_WHITE}${directory_file}${ESH_CLEAR}"
+    else
+        esh_print_error "File does not exist: ${ESH_BOLD_BRIGHT_WHITE}${directory_file}${ESH_CLEAR}"
+    fi
+
+    exit 93
+}
+
 # esh_assert_symlink_exist() : assert that provided file exist and is a symbolic link
 #
 # $1 : path to symbolic link

@@ -75,6 +75,14 @@ Essenshell is a shell library containing the most common and essential functions
     - Exit code:
         - **93**: file was not found
         - **93**: file was not a regular file
+- `esh_assert_directory_exist <PATH>` : assert that provided file exist and is a directory
+    - Will exit with an error code if the provided path is a symbolic link, not try to resolve it.
+    - `$1` (`<PATH>`): path to directory
+    - Return code:
+        - **0**: file is found and is a directory
+    - Exit code:
+        - **93**: file was not found
+        - **93**: file was not a directory
 - `esh_assert_symlink_exist <PATH>` : assert that provided file exist and is a symbolic link
     - `$1` (`<PATH>`): path to symbolic link
     - Return codes:
