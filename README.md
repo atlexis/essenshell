@@ -169,7 +169,7 @@ Essenshell is a shell library containing the most common and essential functions
         - **93**: function with provided name was not found
         - **93**: number of arguments were not evenly divisible by provided number
 
-### inputs.sh
+### input.sh
 - Included with `source "$ESSENSHELL_PATH/input.sh"`
 - `esh_confirm_before_action <PROMPT> <MESSAGE> <ACTION> [<ARG>...]` : ask for user confirmation before performing an action
     - Ask for user input and execute the provided function if confirmed.
