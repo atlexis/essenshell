@@ -274,12 +274,14 @@ function esh_replace_symlink() {
     if [ -e "$dest_file" ] || [ -h "$dest_file" ]; then
         local original_source_file=$(readlink "$dest_file")
         if [[ "$original_source_file" == "$source_file" ]]; then
-            esh_print_info "Wanted symbolic link already exist: ${ESH_BOLD_WHITE}$dest_file${ESH_CLEAR} -> ${ESH_BOLD_WHITE}$original_source_file${ESH_CLEAR}"
+            esh_print_debug "Wanted symbolic link already exist: ${ESH_BOLD_WHITE}$dest_file${ESH_CLEAR} -> ${ESH_BOLD_WHITE}$original_source_file${ESH_CLEAR}"
             return 0
         fi
 
-        esh_print_info "A different symbolic link already exist: ${ESH_BOLD_WHITE}$dest_file${ESH_CLEAR} -> ${ESH_BOLD_WHITE}$original_source_file${ESH_CLEAR}"
-        esh_confirm_before_action "Do you want to replace it?" "Keeping old symbolic link: ${ESH_BOLD_WHITE}$dest_file${ESH_CLEAR} -> ${ESH_BOLD_WHITE}$original_source_file${ESH_CLEAR}" _esh_remove_old_symlink "$dest_file" "$original_source_file"
+        esh_print_info "A different symbolic link already exist: ${ESH_BOLD_WHITE}$dest_file${ESH_CLEAR}"
+        esh_print_info "Old link: ${ESH_BOLD_WHITE}$original_source_file${ESH_CLEAR}"
+        esh_print_info "New link: ${ESH_BOLD_WHITE}$source_file${ESH_CLEAR}"
+        esh_confirm_before_action "Do you want to replace it?" "Keeping old symbolic link." _esh_remove_old_symlink "$dest_file" "$original_source_file"
 
         if [[ "$?" != 0 ]]; then
             return "$?"
