@@ -13,3 +13,28 @@ function setup {
     run esh_version
     assert_output "0.1.0"
 }
+
+@test "input is a number" {
+    run esh_assert_number 1337
+    assert_success
+}
+
+@test "input is 0" {
+    run esh_assert_number 0
+    assert_success
+}
+
+@test "input is not a number" {
+    run esh_assert_number "foobar"
+    assert_failure 93
+}
+
+@test "input is missing" {
+    run esh_assert_number
+    assert_failure 93
+}
+
+@test "input is empty" {
+    run esh_assert_number ""
+    assert_failure 93
+}
