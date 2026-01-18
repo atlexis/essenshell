@@ -136,6 +136,61 @@ function esh_mandatory_env () {
     fi
 }
 
+# esh_assign_mandatory_env() : try to assign environment variable to provided variable, or show error and exit script
+#
+# Do not assign to a variable name prefixed with "_esh". Those names are reserved for internal use by
+# essenshell and might result in errors due to variable scope clashes.
+#
+# $1 : string, name of the environment variable to assign from
+# $2 : variable, name of the variable to assign resulting value to, see restrictions above
+#
+# Return codes:
+# - 0 : variable successfully assigned
+# - 3 : exit code, requested mandatory arguments were not provided
+# - 4 : exit code, mandatory environment variable is undefined
+function esh_assign_mandatory_env () {
+    local _esh_ame_env
+    esh_assign_mandatory_arg 1 _esh_ame_env "environment variable name" "$@"
+    esh_mandatory_env "$_esh_ame_env"
+
+    local _esh_ame_output_var
+    esh_assign_mandatory_arg 2 _esh_ame_output_var "output variable" "$@"
+
+    printf -v "$_esh_ame_output_var" "${!_esh_ame_env}"
+    esh_print_debug "Assigned value ${ESH_BOLD_BRIGHT_WHITE}${!_esh_ame_output_var}${ESH_CLEAR} to variable ${ESH_BOLD_BRIGHT_WHITE}$_esh_ame_output_var${ESH_CLEAR}"
+}
+
+# esh_assign_optional_env() : assign either environment variable or default value to provided variable
+#
+# Do not assign to a variable name prefixed with "_esh". Those names are reserved for internal use by
+# essenshell and might result in errors due to variable scope clashes.
+#
+# $1 : string, name of the environment variable to assign from
+# $2 : variable, name of the variable to assign resulting value to, see restrictions above
+# $3 : default value to assign to variable
+#
+# Return codes:
+# - 0 : variable successfully assigned
+# - 3 : exit code, requested mandatory arguments were not provided
+function esh_assign_optional_env () {
+    local _esh_aoe_env
+    esh_assign_mandatory_arg 1 _esh_aoe_env "environment variable name" "$@"
+
+    local _esh_aoe_output_var
+    esh_assign_mandatory_arg 2 _esh_aoe_output_var "output variable" "$@"
+
+    local _esh_aoe_default_value
+    esh_assign_mandatory_arg 3 _esh_aoe_default_value "default value" "$@"
+
+    if [[ -n "${!_esh_aoe_env}" ]]; then
+        printf -v "$_esh_aoe_output_var" "${!_esh_aoe_env}"
+        esh_print_debug "Assigned value ${ESH_BOLD_BRIGHT_WHITE}${!_esh_aoe_output_var}${ESH_CLEAR} to variable ${ESH_BOLD_BRIGHT_WHITE}$_esh_aoe_output_var${ESH_CLEAR}"
+    else
+        printf -v "$_esh_aoe_output_var" "$_esh_aoe_default_value"
+        esh_print_debug "Assigned default value ${ESH_BOLD_BRIGHT_WHITE}${!_esh_aoe_output_var}${ESH_CLEAR} to variable ${ESH_BOLD_BRIGHT_WHITE}$_esh_aoe_output_var${ESH_CLEAR}"
+    fi
+}
+
 # esh_args_divisible_by() : assert that number of arguments are evenly dividable by the divisor
 #
 # $1 : number, divisor to be evenly dividable by

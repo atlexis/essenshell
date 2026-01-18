@@ -285,6 +285,22 @@ Essenshell is a shell library containing the most common and essential functions
         - **0**: environment variable is set
         - **1**: exit code, mandatory positional variables are unspecified
         - **4**: exit code, mandatory environment variable is undefined
+- `esh_assign_mandatory_env <ENV_NAME> <VAR>` : try to assign environment variable to provided variable, or show error and exit script
+    - Do not assign to a variable name prefixed with `_esh`. Those names are reserved for internal use by essenshell and might result in errors due to variable scope clashes.
+    - `$1` (`<ENV_NAME>`) : **string**, name of the environment variable to assign from
+    - `$2` (`<VAR>`) : **variable**, name of the variable to assign resulting value to, see restrictions above
+    - Return codes:
+        - **0** : variable successfully assigned
+        - **3** : exit code, requested mandatory arguments were not provided
+        - **4** : exit code, mandatory environment variable is undefined
+- `esh_assign_optional_env <ENV_NAME> <VAR> <DEFAULT>` : assign either environment variable or default value to provided variable
+    - Do not assign to a variable name prefixed with `_esh`. Those names are reserved for internal use by essenshell and might result in errors due to variable scope clashes.
+    - `$1` (`<ENV_NAME>`) : **string**, name of the environment variable to assign from
+    - `$2` (`<VAR>`) : **variable**, name of the variable to assign resulting value to, see restrictions above
+    - `$3` (`<DEFAULT>`) : default value to assign to variable
+    - Return codes:
+        - **0** : variable successfully assigned
+        - **3** : exit code, requested mandatory arguments were not provided
 - `esh_args_divisible_by <DIVISOR> [<ARG>...]` : assert that number of arguments are evenly dividable by the divisor
     - `$1` : number, divisor to be evenly dividable by
     - `$2+` : optional, list of arguments to check, commonly called with: `"$@"`
