@@ -15,11 +15,14 @@ Essenshell is a shell library containing the most common and essential functions
     - The directory where `essenshell/` is installed on the system.
     - E.g. `ESSENSHELL_PATH="$HOME/.local/lib/essenshell"`
 - Copy a [template](#templates) into a user script to get up and running quickly
-- Complete library: [`essenshell.sh`](/docs/general.md)
+- Complete library: `essenshell.sh`
+    - Included with `source essenshell.sh`
+    - Includes all sub-libraries
 - Sub-libraries:
     - [`files.sh`](/docs/files.md) - file-related functions
     - [`functions.sh`](/docs/functions.md) - function-related functions
     - [`input.sh`](/docs/input.md) - user-input-related functions
+    - [`misc.sh`](/docs/misc.md) - miscellaneous functions
     - [`print.sh`](/docs/print.md) - print-related functions
     - [`variables.sh`](/docs/variables.md) - variable-related functions
 - **Note**: Sourced variables and functions beginning with an underscore are private variables and are only intended for internal use, do not rely on these directly since their APIs are not stable and might change at any time.

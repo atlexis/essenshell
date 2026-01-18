@@ -1,7 +1,6 @@
-# `essenshell.sh` documentation
+# `misc.sh` documentation
 
-- Included with `source essenshell.sh`
-- Includes all sub-libraries
+- Included with `source misc.sh`
 
 ## Variables
 - `ESSENSHELL_VERSION` - current version of essenshell
