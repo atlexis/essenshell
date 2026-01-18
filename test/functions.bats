@@ -13,7 +13,7 @@ function foo_bar_baz {
 @test "function exist" {
     run esh_assert_function_exist foo_bar_baz
     assert_success
-    assert_output
+    refute_output
 }
 
 @test "function does not exist" {
