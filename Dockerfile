@@ -5,6 +5,7 @@ RUN apk add --no-cache bash ruby bats git npm python3
 RUN gem install bashcov
 RUN npm install -g https://github.com/bats-core/bats-support
 RUN npm install -g https://github.com/bats-core/bats-assert
+RUN npm install -g https://github.com/bats-core/bats-file
 
 # Setup test environment
 WORKDIR /app
