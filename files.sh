@@ -16,6 +16,7 @@ source "$ESSENSHELL_PATH/input.sh"
 # - 93: file was not found
 function esh_assert_file_exist() {
     local file=""
+    _esh_mute_debug
     esh_assign_mandatory_arg 1 file "path to file" "$@"
 
     if [[ ! -e "$file" && ! -L "$file" ]]; then
@@ -35,6 +36,7 @@ function esh_assert_file_exist() {
 # - 93: file was found
 function esh_assert_file_not_exist() {
     local file=""
+    _esh_mute_debug
     esh_assign_mandatory_arg 1 file "path to file" "$@"
 
     if [[ -e "$file" || -L "$file" ]]; then
@@ -55,6 +57,7 @@ function esh_assert_file_not_exist() {
 # - 93: file was not a regular file
 function esh_assert_regular_file_exist() {
     local regular_file=""
+    _esh_mute_debug
     esh_assign_mandatory_arg 1 regular_file "path to regular file" "$@"
 
     # -f will try to resolve symbolic link, so check for this first
@@ -88,6 +91,7 @@ function esh_assert_regular_file_exist() {
 # - 93: file was not a directory
 function esh_assert_directory_exist() {
     local directory_file=""
+    _esh_mute_debug
     esh_assign_mandatory_arg 1 directory_file "path to directory" "$@"
 
     # -f will try to resolve symbolic link, so check for this first
@@ -120,6 +124,7 @@ function esh_assert_directory_exist() {
 # - 93: file was not a symbolic link
 function esh_assert_symlink_exist() {
     local symlink_file=""
+    _esh_mute_debug
     esh_assign_mandatory_arg 1 symlink_file "path to symbolic link" "$@"
 
     if [ -h "$symlink_file" ]; then
@@ -232,7 +237,9 @@ function esh_remove_symlink() {
 }
 
 function _esh_remove_old_symlink() {
+    _esh_mute_debug
     esh_assign_mandatory_arg 1 dest_file "" "$@"
+    _esh_mute_debug
     esh_assign_mandatory_arg 2 original_source_file "" "$@"
 
     esh_print_info "Removing old symbolic link: ${ESH_BOLD_WHITE}${dest_file}${ESH_CLEAR} -x-> ${ESH_BOLD_WHITE}${original_source_file}${ESH_CLEAR}"

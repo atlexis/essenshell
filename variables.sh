@@ -77,6 +77,9 @@ function esh_assign_mandatory_arg () {
 
     local _am_args=("$@")
     printf -v "$_esh_am_output_var" "${_am_args[$((_esh_am_argn-1))]}"
+
+    esh_print_debug "Assigned value ${ESH_BOLD_BRIGHT_WHITE}${!_esh_am_output_var}${ESH_CLEAR} to variable ${ESH_BOLD_BRIGHT_WHITE}$_esh_am_output_var${ESH_CLEAR}"
+    _esh_unmute_debug
 }
 
 # esh_assign_optional_arg() : assign either positional argument or default value to provided variable
@@ -95,12 +98,15 @@ function esh_assign_mandatory_arg () {
 # - 2: exit code, provided argument position was not a number
 function esh_assign_optional_arg () {
     local _esh_ao_argn
+    _esh_mute_debug
     esh_assign_mandatory_arg 1 _esh_ao_argn "argument position" "$@"
 
     local _esh_ao_output_var
+    _esh_mute_debug
     esh_assign_mandatory_arg 2 _esh_ao_output_var "output variable" "$@"
 
     local _esh_ao_default_value
+    _esh_mute_debug
     esh_assign_mandatory_arg 3 _esh_ao_default_value "default value" "$@"
 
     shift 3
@@ -112,10 +118,14 @@ function esh_assign_optional_arg () {
 
     if [[ $# -lt $_esh_ao_argn ]]; then
         printf -v "$_esh_ao_output_var" "$_esh_ao_default_value"
+        esh_print_debug "Assigned default value ${ESH_BOLD_BRIGHT_WHITE}${!_esh_ao_output_var}${ESH_CLEAR} to variable ${ESH_BOLD_BRIGHT_WHITE}$_esh_ao_output_var${ESH_CLEAR}"
     else
         local _esh_am_args=("$@")
         printf -v "$_esh_ao_output_var" "${_esh_am_args[$((_esh_ao_argn-1))]}"
+        esh_print_debug "Assigned value ${ESH_BOLD_BRIGHT_WHITE}${!_esh_ao_output_var}${ESH_CLEAR} to variable ${ESH_BOLD_BRIGHT_WHITE}$_esh_ao_output_var${ESH_CLEAR}"
     fi
+
+    _esh_unmute_debug
 }
 
 # esh_mandatory_env() : check if environment variable is defined, otherwise exit script
@@ -128,6 +138,7 @@ function esh_assign_optional_arg () {
 # - 4: exit code, mandatory environment variable is undefined
 function esh_mandatory_env () {
     local _esh_me_env
+    _esh_mute_debug
     esh_assign_mandatory_arg 1 _esh_me_env "environment variable name" "$@"
 
     if [ -z "${!_esh_me_env}" ]; then
@@ -150,14 +161,17 @@ function esh_mandatory_env () {
 # - 4 : exit code, mandatory environment variable is undefined
 function esh_assign_mandatory_env () {
     local _esh_ame_env
+    _esh_mute_debug
     esh_assign_mandatory_arg 1 _esh_ame_env "environment variable name" "$@"
     esh_mandatory_env "$_esh_ame_env"
 
     local _esh_ame_output_var
+    _esh_mute_debug
     esh_assign_mandatory_arg 2 _esh_ame_output_var "output variable" "$@"
 
     printf -v "$_esh_ame_output_var" "${!_esh_ame_env}"
     esh_print_debug "Assigned value ${ESH_BOLD_BRIGHT_WHITE}${!_esh_ame_output_var}${ESH_CLEAR} to variable ${ESH_BOLD_BRIGHT_WHITE}$_esh_ame_output_var${ESH_CLEAR}"
+    _esh_unmute_debug
 }
 
 # esh_assign_optional_env() : assign either environment variable or default value to provided variable
@@ -174,12 +188,15 @@ function esh_assign_mandatory_env () {
 # - 3 : exit code, requested mandatory arguments were not provided
 function esh_assign_optional_env () {
     local _esh_aoe_env
+    _esh_mute_debug
     esh_assign_mandatory_arg 1 _esh_aoe_env "environment variable name" "$@"
 
     local _esh_aoe_output_var
+    _esh_mute_debug
     esh_assign_mandatory_arg 2 _esh_aoe_output_var "output variable" "$@"
 
     local _esh_aoe_default_value
+    _esh_mute_debug
     esh_assign_mandatory_arg 3 _esh_aoe_default_value "default value" "$@"
 
     if [[ -n "${!_esh_aoe_env}" ]]; then
@@ -189,6 +206,8 @@ function esh_assign_optional_env () {
         printf -v "$_esh_aoe_output_var" "$_esh_aoe_default_value"
         esh_print_debug "Assigned default value ${ESH_BOLD_BRIGHT_WHITE}${!_esh_aoe_output_var}${ESH_CLEAR} to variable ${ESH_BOLD_BRIGHT_WHITE}$_esh_aoe_output_var${ESH_CLEAR}"
     fi
+
+    _esh_unmute_debug
 }
 
 # esh_args_divisible_by() : assert that number of arguments are evenly dividable by the divisor
@@ -202,6 +221,7 @@ function esh_assign_optional_env () {
 # - 93: number of argument are not evenly dividable by the divisor
 function esh_args_divisible_by () {
     local divisor=""
+    _esh_mute_debug
     esh_assign_mandatory_arg 1 divisor "divisor for number of arguments" "$@"
     shift
 

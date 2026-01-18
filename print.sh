@@ -73,7 +73,7 @@ function esh_print_error {
 }
 
 function esh_print_debug {
-    $ESH_DEBUG || return
+    $ESH_DEBUG || return 0
 
     local message=$1
     _esh_print_prompt "$ESH_BOLD_BRIGHT_MAGENTA" "DEBUG" "$message"
@@ -130,4 +130,16 @@ function esh_set_app_color {
     esac
 
     _ESH_APP_COLOR="$color"
+}
+
+function _esh_mute_debug {
+    if [[ -n "$ESH_DEBUG" ]]; then
+        ESH_DEBUG=false
+    fi
+}
+
+function _esh_unmute_debug {
+    if [[ -n "$ESH_DEBUG" ]]; then
+        ESH_DEBUG=true
+    fi
 }

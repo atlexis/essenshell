@@ -13,6 +13,7 @@ source "$ESSENSHELL_PATH/variables.sh"
 # - 93: function was not found
 function esh_assert_function_exist() {
     func_name=""
+    _esh_mute_debug
     esh_assign_mandatory_arg 1 func_name "function to check if it exists" "$@"
 
     if ! declare -F "$func_name" > /dev/null; then
@@ -33,10 +34,12 @@ function esh_assert_function_exist() {
 # - 93: number of arguments were not evenly divisible by provided number
 function esh_execute_for_each_n_args() {
     local func_name=""
+    _esh_mute_debug
     esh_assign_mandatory_arg 1 func_name "function to execute with each argument" "$@"
     esh_assert_function_exist "$func_name"
 
     local num_args=""
+    _esh_mute_debug
     esh_assign_mandatory_arg 2 num_args "number of parameters per execution" "$@"
 
     shift 2

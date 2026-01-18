@@ -23,9 +23,15 @@ source "$ESSENSHELL_PATH/print.sh"
 # Exit codes:
 # - 3: mandatory positional argument was not provided
 function esh_confirm_before_action() {
+    _esh_mute_debug
     esh_assign_mandatory_arg 1 prompt "prompt to ask" "$@"
+
+    _esh_mute_debug
     esh_assign_mandatory_arg 2 decline_message "message to print if decline" "$@"
+
+    _esh_mute_debug
     esh_assign_mandatory_arg 3 action "function to execute if confirmed" "$@"
+
     shift 3
 
     read -p "$prompt y/N: " key
