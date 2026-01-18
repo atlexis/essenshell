@@ -19,7 +19,7 @@ Essenshell is a shell library containing the most common and essential functions
 - Sub-libraries:
     - [`files.sh`](/docs/files.md) - file-related functions
     - [`functions.sh`](/docs/functions.md) - function-related functions
-    - [`input.sh`](#inputsh) - user-input-related functions
+    - [`input.sh`](/docs/input.md) - user-input-related functions
     - [`print.sh`](#printsh) - print-related functions
     - [`variables.sh`](#variablessh) - variable-related functions
 - **Note**: Sourced variables and functions beginning with an underscore are private variables and are only intended for internal use, do not rely on these directly since their APIs are not stable and might change at any time.
@@ -43,25 +43,6 @@ Essenshell is a shell library containing the most common and essential functions
 - Functions:
 - `esh_version` - print version of essenshell
 - Includes all sub-libraries
-
-### input.sh
-- Included with `source "$ESSENSHELL_PATH/input.sh"`
-- `esh_confirm_before_action <PROMPT> <MESSAGE> <ACTION> [<ARG>...]` : ask for user confirmation before performing an action
-    - Ask for user input and execute the provided function if confirmed.
-    - Otherwise, print a provided message.
-    - Will append "y/N: " to the end of the prompt.
-    - Confirmation values: 'y', 'Y', 'yes', 'Yes', and 'YES'
-    - Decline values: 'n', 'N', 'q', 'Q', 'no', 'No', 'NO', 'quit', 'Quit', and 'QUIT'
-    - `$1` : string, prompt to ask before user input
-    - `$2` : string, message to print if user declines. An empty string will not be printed.
-    - `$3` : function, name of function to execute if user confirms
-    - `$4+` : optional, list of arguments to forward to executed function
-    - Return codes:
-        - **0**: user confirmed
-        - **1**: user declined
-        - **2**: unknown answer after prompt
-    - Exit codes:
-        - **3**: mandatory positional argument was not provided
 
 ### print.sh
 - Included with `source "$ESSENSHELL_PATH/print.sh"`
