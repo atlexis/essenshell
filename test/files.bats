@@ -179,3 +179,40 @@ function teardown {
     assert_success
     assert_link_exists "$DEST_DIR/another/path/to/mydestination"
 }
+
+@test "remove symlink, missing DEST_DIR" {
+    run esh_remove_symlink
+    assert_failure 4
+}
+
+@test "remove symlink, missing path to file to remove" {
+    DEST_DIR=/files/dest/
+    run esh_remove_symlink
+    assert_failure 3
+}
+
+@test "remove symlink, file to remove does not exist" {
+    DEST_DIR=/files/dest/
+    run esh_remove_symlink "myfile"
+    assert_failure 93
+}
+
+@test "remove symlink, file to remove is not a symlink" {
+    DEST_DIR=/files/dest/
+    touch "$DEST_DIR/myfile"
+
+    run esh_remove_symlink "myfile"
+
+    assert_failure 93
+}
+
+@test "remove symlink" {
+    DEST_DIR=/files/dest/
+    ln -s "/files/source/file" "$DEST_DIR/mylink"
+    assert_link_exists "$DEST_DIR/mylink"
+
+    run esh_remove_symlink "mylink"
+
+    assert_success
+    assert_link_not_exists "$DEST_DIR/mylink"
+}
