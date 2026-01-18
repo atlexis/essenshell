@@ -300,3 +300,33 @@ function esh_replace_symlink() {
 
     esh_print_info "Linked ${ESH_BOLD_WHITE}$dest_file${ESH_CLEAR} -> ${ESH_BOLD_WHITE}$source_file${ESH_CLEAR}"
 }
+
+# esh_install() : install with symlink, install with copy, or uninstall symlink
+#
+# For more detailed documentation of environment variables, arguments, and return/exit codes,
+# see each specific function.
+#
+# $ESH_INSTALL : controlling the behavior
+# - install, install_symlink (default if not specified) -> esh_symlink_file
+# - install_copy -> esh_copy_file
+# - uninstall, uninstall_symlink -> esh_remove_symlink
+# $1+ : all arguments are forwarded to its respective function
+# Return codes:
+# - 0: successful installation or uninstallation
+# - 4: exit code, mandatory environment variable was not defined
+# - 93: exit code, unknown action in ESH_INSTALL
+function esh_install() {
+    local _esh_f_i_action
+    esh_assign_optional_env ESH_INSTALL _esh_f_i_action "install_symlink"
+
+    if [[ "$_esh_f_i_action" == "install" || "$_esh_f_i_action" == "install_symlink" ]]; then
+        esh_symlink_file "$@"
+    elif [[ "$_esh_f_i_action" == "install_copy" ]]; then
+        esh_copy_file "$@"
+    elif [[ "$_esh_f_i_action" == "uninstall" || "$_esh_f_i_action" == "uninstall_symlink" ]]; then
+        esh_remove_symlink "$@"
+    else
+        esh_print_error "Unknown action: ${ESH_BOLD_BRIGHT_WHITE}${_esh_f_i_action}${ESH_CLEAR}"
+        exit 93
+    fi
+}

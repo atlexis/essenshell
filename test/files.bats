@@ -216,3 +216,93 @@ function teardown {
     assert_success
     assert_link_not_exists "$DEST_DIR/mylink"
 }
+
+@test "install with unknown action" {
+    ESH_INSTALL="foobar"
+    run esh_install
+    assert_failure 93
+}
+
+@test "install with no action" {
+    # successful symlink file
+    SOURCE_DIR="/files/source/"
+    DEST_DIR="/files/dest/"
+    touch "$SOURCE_DIR/myfile"
+    assert_link_not_exists "$DEST_DIR/myfile"
+
+    run esh_install "myfile"
+
+    assert_success
+    assert_link_exists "$DEST_DIR/myfile"
+}
+
+@test "install with install action" {
+    ESH_INSTALL="install"
+    # successful symlink file
+    SOURCE_DIR="/files/source/"
+    DEST_DIR="/files/dest/"
+    touch "$SOURCE_DIR/myfile"
+    assert_link_not_exists "$DEST_DIR/anotherfile"
+
+    run esh_install "myfile" "anotherfile"
+
+    assert_success
+    assert_link_exists "$DEST_DIR/anotherfile"
+}
+
+@test "install with install_symlink action" {
+    ESH_INSTALL="install_symlink"
+    # successful symlink file
+    SOURCE_DIR="/files/source/"
+    DEST_DIR="/files/dest/"
+    mkdir -p "$SOURCE_DIR/path/to/myfile"
+    assert_link_not_exists "$DEST_DIR/path/to/myfile"
+
+    run esh_install "path/to/myfile"
+
+    assert_success
+    assert_link_exists "$DEST_DIR/path/to/myfile"
+}
+
+@test "install with install_copy action" {
+    ESH_INSTALL="install_copy"
+    # successful copy file
+    SOURCE_DIR="/files/source/"
+    DEST_DIR="/files/dest/"
+    echo "foo bar baz" > "$SOURCE_DIR/myfile"
+    assert_not_exists "$DEST_DIR/myfile"
+
+    run esh_install "myfile"
+
+    assert_success
+    assert_file_exists "$DEST_DIR/myfile"
+    assert_files_equal "$SOURCE_DIR/myfile" "$DEST_DIR/myfile"
+}
+
+@test "install with uninstall action" {
+    ESH_INSTALL="uninstall"
+    # successful remove symlink
+    DEST_DIR=/files/dest/
+    ln -s "/files/source/file" "$DEST_DIR/mylink"
+    assert_link_exists "$DEST_DIR/mylink"
+
+    run esh_install "mylink"
+
+    assert_success
+    assert_link_not_exists "$DEST_DIR/mylink"
+}
+
+@test "install with uninstall_symlink action" {
+    ESH_INSTALL="uninstall_symlink"
+    # successful remove symlink
+    DEST_DIR=/files/dest/
+    mkdir -p "$DEST_DIR/path/to"
+    ln -s "/files/source/file" "$DEST_DIR/path/to/mylink"
+    assert_link_exists "$DEST_DIR/path/to/mylink"
+
+    run esh_install "path/to/mylink"
+
+    assert_success
+    assert_link_not_exists "$DEST_DIR/path/to/mylink"
+    assert_dir_exists "$DEST_DIR/path/to"
+}

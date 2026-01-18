@@ -12,6 +12,7 @@
 - [`esh_symlink_file`](#esh_symlink_file) - Create symbolic link from source file to destination file
 - [`esh_remove_symlink`](#esh_remove_symlink) - Remove symbolic link
 - [`esh_replace_symlink`](#esh_replace_symlink) - Create or replace symbolic link from destination file to source file.
+- [`esh_install`](#esh_install) - Install with symlink, install with copy, or uninstall symlink.
 
 ### `esh_assert_file_exist`
 - Syntax: `esh_assert_file_exist <PATH>`
@@ -116,3 +117,17 @@
     - **3** : exit code, mandatory positional argument was not provided
     - **4** : exit code, mandatory environment variable was not provided
     - **93** : exit code, source file does not exist
+
+### `esh_install`
+- Syntax `esh_install <ARGS>...`
+- Install with symlink, install with copy, or uninstall symlink
+- For more detailed documentation of environment variables, arguments, and return/exit codes, see each specific function.
+- `$ESH_INSTALL` : controlling the behavior
+    - `install`, `install_symlink` (default if not specified) -> [`esh_symlink_file`](#esh_symlink_file)
+    - `install_copy` -> [`esh_copy_file`](#esh_copy_file)
+    - `uninstall`, `uninstall_symlink` -> [`esh_remove_symlink`](#esh_remove_symlink)
+- `$1+` (`<ARGS>...`) : all arguments are forwarded to its respective function
+- Return codes:
+    - **0** : successful installation or uninstallation
+    - **4** : exit code, mandatory environment variable was not defined
+    - **93** : exit code, unknown action in `ESH_INSTALL`
