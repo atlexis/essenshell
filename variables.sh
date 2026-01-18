@@ -2,6 +2,7 @@
 _ESH_VARIABLES_LOADED=true
 
 source "$ESSENSHELL_PATH/print.sh"
+source "$ESSENSHELL_PATH/misc.sh"
 
 # esh_mandatory_arg() : check if positional argument is provided, otherwise exit script
 #
@@ -12,8 +13,8 @@ source "$ESSENSHELL_PATH/print.sh"
 # Return codes:
 # - 0: argument sucessfully found
 # - 1: exit code, mandatory positional variables are unspecified
-# - 2: exit code, provided argument position was not a number
 # - 3: exit code, requested mandatory argument was not provided
+# - 93: exit code, provided argument position was not a number
 function esh_mandatory_arg () {
     if [[ $# -lt 1 ]]; then
         esh_print_error "Missing argument ${ESH_BOLD_BRIGHT_WHITE}#1${ESH_CLEAR}: ${ESH_BOLD_BRIGHT_WHITE}argument position${ESH_CLEAR}"
@@ -29,10 +30,7 @@ function esh_mandatory_arg () {
     local _esh_m_error_message="$2"
     shift 2
 
-    if [[ ! "$_esh_m_argn" =~ ^[0-9]+$ ]]; then
-        esh_print_error "${ESH_BOLD_BRIGHT_WHITE}Argument position${ESH_CLEAR} must be a number: ${ESH_BOLD_BRIGHT_WHITE}$_esh_m_argn${ESH_CLEAR}"
-        exit 2
-    fi
+    esh_assert_number "$_esh_m_argn"
 
     if [[ $# -lt $_esh_m_argn ]]; then
         esh_print_error "Missing argument ${ESH_BOLD_BRIGHT_WHITE}#$_esh_m_argn${ESH_CLEAR}: ${ESH_BOLD_BRIGHT_WHITE}$_esh_m_error_message${ESH_CLEAR}"
@@ -53,8 +51,8 @@ function esh_mandatory_arg () {
 # Return codes:
 # - 0: variable successfully assigned
 # - 1: exit code, mandatory positional variables are unspecified
-# - 2: exit code, provided argument position was not a number
 # - 3: exit code, requested mandatory argument was not provided
+# - 93: exit code, provided argument position was not a number
 function esh_assign_mandatory_arg () {
     esh_mandatory_arg 1 "argument position" "$@"
     esh_mandatory_arg 2 "output variable" "$@"
@@ -65,10 +63,7 @@ function esh_assign_mandatory_arg () {
     local _esh_am_error_message="$3"
     shift 3
 
-    if [[ ! "$_esh_am_argn" =~ ^[0-9]+$ ]]; then
-        esh_print_error "${ESH_BOLD_BRIGHT_WHITE}Argument position${ESH_CLEAR} must be a number: ${ESH_BOLD_BRIGHT_WHITE}$_esh_am_argn${ESH_CLEAR}"
-        exit 2
-    fi
+    esh_assert_number "$_esh_am_argn"
 
     if [[ $# -lt $_esh_am_argn ]]; then
         esh_print_error "Missing argument ${ESH_BOLD_BRIGHT_WHITE}#$_esh_am_argn${ESH_CLEAR}: ${ESH_BOLD_BRIGHT_WHITE}$_esh_am_error_message${ESH_CLEAR}"
@@ -111,10 +106,7 @@ function esh_assign_optional_arg () {
 
     shift 3
 
-    if [[ ! "$_esh_ao_argn" =~ ^[0-9]+$ ]]; then
-        esh_print_error "${ESH_BOLD_BRIGHT_WHITE}Argument position${ESH_CLEAR} must be a number: ${ESH_BOLD_BRIGHT_WHITE}$_esh_ao_argn${ESH_CLEAR}"
-        exit 2
-    fi
+    esh_assert_number "$_esh_ao_argn"
 
     if [[ $# -lt $_esh_ao_argn ]]; then
         printf -v "$_esh_ao_output_var" "$_esh_ao_default_value"
@@ -217,13 +209,15 @@ function esh_assign_optional_env () {
 #
 # Return codes:
 # - 0: number of arguments are evenly dividable by the divisor
-# Exit codes:
-# - 93: number of argument are not evenly dividable by the divisor
+# - 93: exit code, provided divisor was not a number
+# - 93: exit code, number of argument are not evenly dividable by the divisor
 function esh_args_divisible_by () {
     local divisor=""
     _esh_mute_debug
     esh_assign_mandatory_arg 1 divisor "divisor for number of arguments" "$@"
     shift
+
+    esh_assert_number "$divisor"
 
     if (( $# % $divisor != 0 )); then
         esh_print_error "Number of elements is not divisible by $divisor: ${ESH_BOLD_BRIGHT_WHITE}$#${ESH_CLEAR}"

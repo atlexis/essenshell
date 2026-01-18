@@ -20,8 +20,8 @@
 - Return codes:
     - **0** : argument sucessfully found
     - **1** : exit code, mandatory positional variables are unspecified
-    - **2** : exit code, provided argument position was not a number
     - **3** : exit code, requested mandatory argument was not provided
+    - **93** : exit code, provided argument position was not a number
 
 ### `esh_assign_mandatory_arg`
 - Syntax: `esh_assign_mandatory_arg <ARGN> <VAR> <ERRMSG> [<ARG>...]`
@@ -34,8 +34,8 @@
 - Return codes:
     - **0** : variable successfully assigned
     - **1** : exit code, mandatory positional variables are unspecified
-    - **2** : exit code, provided argument position was not a number
     - **3** : exit code, requested mandatory argument was not provided
+    - **93** : exit code, provided argument position was not a number
 
 ### `esh_assign_optional_arg`
 - Syntax: `esh_assign_optional_arg <ARGN> <VAR> <DEFAULT> [<ARG>...]`
@@ -48,7 +48,7 @@
 - Return codes:
     - **0** : variable successfully assigned
     - **1** : exit code, mandatory positional variables are unspecified
-    - **2** : exit code, provided argument position was not a number
+    - **93** : exit code, provided argument position was not a number
 
 ### `esh_mandatory_env`
 - Syntax: `esh_mandatory_env <ENV_NAME>`
@@ -84,8 +84,9 @@
 ### `esh_args_divisible_by`
 - Syntax: `esh_args_divisible_by <DIVISOR> [<ARG>...]`
 - Assert that number of arguments are evenly dividable by the divisor
-- `$1` : number, divisor to be evenly dividable by
-- `$2+` : optional, list of arguments to check, commonly called with: `"$@"`
+- `$1` : **number**, divisor to be evenly dividable by
+- `$2+` : **optional**, list of arguments to check, commonly called with: `"$@"`
 - Return codes:
     - **0**: number of arguments are evenly dividable by the divisor
+    - **93**: exit code, provided divisor was not a number
     - **93**: exit code, number of argument are not evenly dividable by the divisor
