@@ -15,7 +15,7 @@ Essenshell is a shell library containing the most common and essential functions
     - The directory where `essenshell/` is installed on the system.
     - E.g. `ESSENSHELL_PATH="$HOME/.local/lib/essenshell"`
 - Copy a [template](#templates) into a user script to get up and running quickly
-- Complete library: [`essenshell.sh`](#global)
+- Complete library: [`essenshell.sh`](/docs/general.md)
 - Sub-libraries:
     - [`files.sh`](/docs/files.md) - file-related functions
     - [`functions.sh`](/docs/functions.md) - function-related functions
@@ -35,14 +35,6 @@ Essenshell is a shell library containing the most common and essential functions
 - `templates/simple_essenshell_path`
     - verify that `$ESSENSHELL_PATH/essenshell.sh` exist
     - source `$ESSENSHELL_PATH/essenshell.sh` into script
-
-### Global
-- Included with `source essenshell.sh`
-- Variables:
-    - `ESSENSHELL_VERSION` - current version of essenshell
-- Functions:
-- `esh_version` - print version of essenshell
-- Includes all sub-libraries
 
 ## Test
 - Dependencies: `docker`
