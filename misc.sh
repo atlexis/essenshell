@@ -96,7 +96,7 @@ function esh_assert_tool {
     local _esh_at_argn="$1"
 
     if ! command -v "$_esh_at_argn" &> /dev/null; then
-        esh_print_debug "Required tool not found in PATH: ${ESH_BOLD_BRIGHT_WHITE}$_esh_at_argn${ESH_CLEAR}"
+        esh_print_error "Required tool not found in PATH: ${ESH_BOLD_BRIGHT_WHITE}$_esh_at_argn${ESH_CLEAR}"
         exit 93
     fi
 }
