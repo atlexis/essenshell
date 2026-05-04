@@ -63,3 +63,43 @@ function setup {
     run esh_assert_number ""
     assert_failure 93
 }
+
+@test "checked tool is found" {
+    run esh_check_tool echo
+    assert_success
+}
+
+@test "checked tool is not found" {
+    run esh_check_tool not_a_tool
+    assert_failure 1
+}
+
+@test "checked tool is missing" {
+    run esh_check_tool
+    assert_failure 93
+}
+
+@test "checked tool is empty" {
+    run esh_check_tool ""
+    assert_failure 1
+}
+
+@test "asserted tool is found" {
+    run esh_assert_tool echo
+    assert_success
+}
+
+@test "asserted tool is not found" {
+    run esh_assert_tool not_a_tool
+    assert_failure 93
+}
+
+@test "asserted tool is missing" {
+    run esh_assert_tool
+    assert_failure 93
+}
+
+@test "asserted tool is empty" {
+    run esh_assert_tool ""
+    assert_failure 93
+}

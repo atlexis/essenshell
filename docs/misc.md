@@ -9,6 +9,8 @@
 - `esh_version` - print version of essenshell
 - [`esh_check_number`](#esh_check_number) - check if input is a number
 - [`esh_assert_number`](#esh_assert_number) - assert that input is a number, otherwise exit script
+- [`esh_check_tool`](#esh_check_tool) - check if tool is available in PATH
+- [`esh_assert_tool`](#esh_assert_tool) - assert that tool is available in PATH, otherwise exit script
 
 ### `esh_check_number`
 - Syntax: `esh_check_number <INPUT>`
@@ -29,3 +31,21 @@
     - **0** : input was a number
     - **93** : exit code, requested mandatory argument was not provided
     - **93** : exit code, provided input was not a number
+
+### `esh_check_tool`
+- Syntax: `esh_check_tool <NAME>`
+- Check if tool is available in PATH
+- `$1` (`<NAME>`) : string, name of the tool to check if it exist in PATH
+- Return codes:
+    - **0**: tool was found in PATH
+    - **1**: tool was not found in PATH
+    - **93**: exit code, requested mandatory argument was not provided
+
+### `esh_assert_tool`
+- Syntax: `esh_assert_tool <NAME>`
+- Assert that tool is available in PATH, otherwise exit script
+- `$1` (`<NAME>`) : string, name of the tool to assert whether it exist in PATH
+- Return codes:
+    - **0**: tool was found in PATH
+    - **93**: exit code, tool was not found in PATH
+    - **93**: exit code, requested mandatory argument was not provided
