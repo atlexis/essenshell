@@ -39,6 +39,7 @@ ESH_BOLD_BRIGHT_CYAN="\033[1;96m"
 ESH_BOLD_BRIGHT_WHITE="\033[1;97m"
 
 [ -z ${ESH_DEBUG+x} ] && ESH_DEBUG=false
+_ESH_INTERNAL_DEBUG="$ESH_DEBUG"
 
 _ESH_APP_NAME=""
 _ESH_APP_COLOR=""
@@ -134,12 +135,13 @@ function esh_set_app_color {
 
 function _esh_mute_debug {
     if [[ -n "$ESH_DEBUG" ]]; then
+        _ESH_INTERNAL_DEBUG="$ESH_DEBUG"
         ESH_DEBUG=false
     fi
 }
 
 function _esh_unmute_debug {
     if [[ -n "$ESH_DEBUG" ]]; then
-        ESH_DEBUG=true
+        ESH_DEBUG=$_ESH_INTERNAL_DEBUG
     fi
 }
