@@ -14,6 +14,50 @@ function teardown {
     rm -r /files/dest/
 }
 
+@test "successful check that file exist" {
+    touch "/files/source/foo"
+    run esh_check_file_exist "/files/source/foo"
+    assert_success
+}
+
+@test "erroneous check that file exist" {
+    run esh_check_file_exist "/files/source/foo"
+    assert_failure 1
+}
+
+@test "successful assertion that file exist" {
+    touch "/files/source/foo"
+    run esh_assert_file_exist "/files/source/foo"
+    assert_success
+}
+
+@test "erroneous assertion that file exist" {
+    run esh_assert_file_exist "/files/source/foo"
+    assert_failure 93
+}
+
+@test "successful check that file does not exist" {
+    touch "/files/source/foo"
+    run esh_check_file_not_exist "/files/source/foo"
+    assert_failure 1
+}
+
+@test "erroneous check that file does not exist" {
+    run esh_check_file_not_exist "/files/source/foo"
+    assert_success
+}
+
+@test "successful assertion that file does not exist" {
+    touch "/files/source/foo"
+    run esh_assert_file_not_exist "/files/source/foo"
+    assert_failure 93
+}
+
+@test "erroneous assertion that file does not exist" {
+    run esh_assert_file_not_exist "/files/source/foo"
+    assert_success
+}
+
 @test "copy file, missing SOURCE_DIR" {
     run esh_copy_file
     assert_failure 4

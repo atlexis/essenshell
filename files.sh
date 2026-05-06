@@ -5,7 +5,26 @@ source "$ESSENSHELL_PATH/print.sh"
 source "$ESSENSHELL_PATH/variables.sh"
 source "$ESSENSHELL_PATH/input.sh"
 
-# esh_assert_file_exist() : assert that file exist
+# esh_check_file_exist() : check that file exists
+#
+# Does not resolve symbolic links, but checks if something exist at the file path.
+#
+# $1 : path to file
+# Return code:
+# - 0: file was found
+# - 1: file was not found
+function esh_check_file_exist() {
+    local file=""
+    _esh_mute_debug
+    esh_assign_mandatory_arg 1 file "path to file" "$@"
+
+    if [[ ! -e "$file" && ! -L "$file" ]]; then
+        esh_print_debug "File does not exist: ${ESH_BOLD_BRIGHT_WHITE}${file}${ESH_CLEAR}"
+        return 1
+    fi
+}
+
+# esh_assert_file_exist() : assert that file exist, otherwise exit script
 #
 # Does not resolve symbolic links, but asserts that something exist at the file path.
 #
@@ -19,13 +38,29 @@ function esh_assert_file_exist() {
     _esh_mute_debug
     esh_assign_mandatory_arg 1 file "path to file" "$@"
 
-    if [[ ! -e "$file" && ! -L "$file" ]]; then
-        esh_print_error "File does not exist: ${ESH_BOLD_BRIGHT_WHITE}${file}${ESH_CLEAR}"
-        exit 93
+    esh_check_file_exist "$file" || exit 93
+}
+
+# esh_check_file_not_exist() : check that file does not exist
+#
+# Does not resolve symbolic links, but checks that nothing exist at the file path.
+#
+# $1 : path to file
+# Return code:
+# - 0: file was not found
+# - 1: file was found
+function esh_check_file_not_exist() {
+    local file=""
+    _esh_mute_debug
+    esh_assign_mandatory_arg 1 file "path to file" "$@"
+
+    if [[ -e "$file" || -L "$file" ]]; then
+        esh_print_debug "File does already exist: ${ESH_BOLD_BRIGHT_WHITE}${file}${ESH_CLEAR}"
+        return 1
     fi
 }
 
-# esh_assert_file_not_exist() : assert that file does not exist
+# esh_assert_file_not_exist() : assert that file does not exist, otherwise exit script
 #
 # Does not resolve symbolic links, but asserts that nothing exist at the file path.
 #
@@ -39,10 +74,7 @@ function esh_assert_file_not_exist() {
     _esh_mute_debug
     esh_assign_mandatory_arg 1 file "path to file" "$@"
 
-    if [[ -e "$file" || -L "$file" ]]; then
-        esh_print_error "File does already exist: ${ESH_BOLD_BRIGHT_WHITE}${file}${ESH_CLEAR}"
-        exit 93
-    fi
+    esh_check_file_not_exist "$file" || exit 93
 }
 
 # esh_assert_regular_file_exist() : assert that provided file exist and is a regular file

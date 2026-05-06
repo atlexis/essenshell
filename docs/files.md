@@ -3,8 +3,10 @@
 - Included with `source "$ESSENSHELL_PATH/files.sh"`
 
 ## Functions
-- [`esh_assert_file_exist`](#esh_assert_file_exist) - Assert that file exist
-- [`esh_assert_file_not_exist`](#esh_assert_file_not_exist) - Assert that file does not exist
+- [`esh_check_file_exist`](#esh_check_file_exist) - Check that file exists
+- [`esh_assert_file_exist`](#esh_assert_file_exist) - Assert that file exist, otherwise exist script
+- [`esh_check_file_not_exist`](#esh_check_file_not_exist) - Check that file does not exist
+- [`esh_assert_file_not_exist`](#esh_assert_file_not_exist) - Assert that file does not exist, otherwise exist script
 - [`esh_assert_regular_file_exist`](#esh_assert_regular_file_exist) - Assert that provided file exist and is a regular file
 - [`esh_assert_directory_exist`](#esh_assert_directory_exist) - Assert that provided file exist and is a directory
 - [`esh_assert_symlink_exist`](#esh_assert_symlink_exist) - Assert that provided file exist and is a symbolic link
@@ -14,6 +16,15 @@
 - [`esh_replace_symlink`](#esh_replace_symlink) - Create or replace symbolic link from destination file to source file.
 - [`esh_install`](#esh_install) - Install with symlink, install with copy, or uninstall symlink.
 
+### esh_check_file_exist
+- Syntax: `esh_check_file_exist <PATH>`
+- Check that file exists
+- Does not resolve symbolic links, but checks if something exist at the file path.
+- `$1` (`<PATH>`) : path to file
+- Return code:
+    - **0**: file was found
+    - **1**: file was not found
+
 ### `esh_assert_file_exist`
 - Syntax: `esh_assert_file_exist <PATH>`
 - Assert that file exist
@@ -22,6 +33,15 @@
 - Return code:
     - **0** : file was found
     - **93** : exit code, file was not found
+
+### esh_check_file_not_exist
+- Syntax: `esh_check_file_not_exist <PATH>`
+- Check that file does not exist
+- Does not resolve symbolic links, but checks that nothing exist at the file path.
+- `$1` (`<PATH>`) : path to file
+- Return code:
+    - **0**: file was not found
+    - **1**: file was found
 
 ### `esh_assert_file_not_exist`
 - Syntax: `esh_assert_file_not_exist <PATH>`
