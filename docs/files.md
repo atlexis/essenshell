@@ -125,7 +125,8 @@
 - `$ESH_INSTALL` : controlling the behavior
     - `install`, `install_symlink` (default if not specified) -> [`esh_symlink_file`](#esh_symlink_file)
     - `install_copy` -> [`esh_copy_file`](#esh_copy_file)
-    - `uninstall`, `uninstall_symlink` -> [`esh_remove_symlink`](#esh_remove_symlink)
+    - `uninstall`, `uninstall_symlink` -> [`esh_remove_symlink`](#esh_remove_symlink).
+        - If more than 2 arguments are provided to `esh_install`, the second one will be forwarded to `esh_remove_symlink`.
 - `$1+` (`<ARGS>...`) : all arguments are forwarded to its respective function
 - Return codes:
     - **0** : successful installation or uninstallation

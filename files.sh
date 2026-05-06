@@ -324,7 +324,11 @@ function esh_install() {
     elif [[ "$_esh_f_i_action" == "install_copy" ]]; then
         esh_copy_file "$@"
     elif [[ "$_esh_f_i_action" == "uninstall" || "$_esh_f_i_action" == "uninstall_symlink" ]]; then
-        esh_remove_symlink "$@"
+        if [[ "$#" -ge 2 ]]; then
+            esh_remove_symlink "$2"
+        else
+            esh_remove_symlink "$@"
+        fi
     else
         esh_print_error "Unknown action: ${ESH_BOLD_BRIGHT_WHITE}${_esh_f_i_action}${ESH_CLEAR}"
         exit 93

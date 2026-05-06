@@ -306,3 +306,23 @@ function teardown {
     assert_link_not_exists "$DEST_DIR/path/to/mylink"
     assert_dir_exists "$DEST_DIR/path/to"
 }
+
+@test "install with unistall action and two arguments" {
+    SOURCE_DIR="/files/source/"
+    DEST_DIR=/files/dest/
+    touch "$SOURCE_DIR/myfile"
+    assert_link_not_exists "$DEST_DIR/mylink"
+
+    # Install link first
+    ESH_INSTALL="install"
+    run esh_install "myfile" "mylink"
+    assert_link_exists "$DEST_DIR/mylink"
+
+    # Uninstall link with the same arguments as installing
+    ESH_INSTALL="uninstall"
+    run esh_install "myfile" "mylink"
+
+    assert_success
+    assert_link_not_exists "$DEST_DIR/mylink"
+    assert_file_exists "$SOURCE_DIR/myfile"
+}
